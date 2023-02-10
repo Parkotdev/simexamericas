@@ -1,18 +1,35 @@
 import React from "react";
 import { useProSidebar } from "react-pro-sidebar";
 import { useTranslation } from "react-i18next";
-import axios from "axios";
+import { router } from "@inertiajs/react";
 import { AppBar, Avatar, Box, IconButton, ListItemIcon, Menu, MenuItem, Toolbar } from "@mui/material";
+import axios from "axios";
+import Swal from "sweetalert2";
 
+import bgOPSes from "@/assets/images/bg-ops-es.png";
+import bgOPSen from "@/assets/images/bg-ops-en.png";
+import bgOPSfr from "@/assets/images/bg-ops-fr.png";
+import bgOPSpt from "@/assets/images/bg-ops-pt.png";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import ExitToAppRoundedIcon from "@mui/icons-material/ExitToAppRounded";
 
-import { BootstrapTooltip } from "@/components";
-import Swal from "sweetalert2";
-import { router } from "@inertiajs/react";
+import { BootstrapTooltip, Language } from "@/components";
+
+const getBG = (locale: string) => {
+  switch (locale) {
+    case "en":
+      return <img alt="image" src={bgOPSen} width={467} className="w-auto h-[80px]" />;
+    case "fr":
+      return <img alt="image" src={bgOPSfr} width={467} className="w-auto h-[80px]" />;
+    case "pt":
+      return <img alt="image" src={bgOPSpt} width={467} className="w-auto h-[80px]" />;
+    default:
+      return <img alt="image" src={bgOPSes} width={467} className="w-auto h-[80px]" />;
+  }
+};
 
 export default function NavBar() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { broken, collapseSidebar, toggleSidebar } = useProSidebar();
 
   const [anchorElUser, setAnchorElUser] = React.useState<HTMLButtonElement | null>(null);
@@ -26,9 +43,25 @@ export default function NavBar() {
       await axios
         .post("/logout")
         .then(() => router.get("/login"))
-        .catch(() => Swal.fire({ title: "Oops", text: t("common.error") || "", icon: "error" }));
+        .catch(() => {
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            showConfirmButton: false,
+            timer: 2000,
+            title: "Oops",
+            text: t("common.error") || ""
+          });
+        });
     } catch (error) {
-      Swal.fire({ title: "Oops", text: t("common.error") || "", icon: "error" });
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 2000,
+        title: "Oops",
+        text: t("common.error") || ""
+      });
     }
   };
 
@@ -46,6 +79,8 @@ export default function NavBar() {
         >
           <MenuRoundedIcon />
         </IconButton>
+
+        {getBG(i18n.language)}
 
         <Box sx={{ flexGrow: 1 }}>Reloj</Box>
 
@@ -103,6 +138,8 @@ export default function NavBar() {
             {t("navbar.sign-out")}
           </MenuItem>
         </Menu>
+
+        <Language />
       </Toolbar>
     </AppBar>
   );

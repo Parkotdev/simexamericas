@@ -23,11 +23,23 @@ export interface SignInProps {
 
 /******* MODALS *******/
 
-export interface ModalSignUpProps {
+export interface ModalGeneralProps {
   open: boolean;
   onClose: () => void;
+}
+
+export interface ModalSignUpProps extends ModalGeneralProps {
   countries: CountryType[];
   simulations: SimulationType[];
 }
 
+export interface ModalProfileProps extends ModalGeneralProps {
+  countries: CountryType[];
+}
+
 /***** END MODALS *****/
+
+export interface FormProfileProps {
+  onClose: () => void;
+  countries: CountryType[];
+}

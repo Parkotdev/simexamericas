@@ -8,9 +8,11 @@ export default function Layout({ children }: GeneralProps) {
   return (
     <div className="p-0 flex relative h-screen">
       <Sidebar />
-      <main>
+
+      <main className="w-full">
         <NavBar />
-        {children}
+
+        <div className="p-5">{children}</div>
       </main>
     </div>
   );

@@ -80,11 +80,8 @@ export type SubgroupType = {
   updated_at: null | string;
 };
 
-export type AuthType = {
-  user: null | UserType;
-};
-
 export type UserType = {
+  id: string;
   role: RoleType;
   country: CountryType;
   simulation: null | SimulationType;
@@ -99,6 +96,26 @@ export type UserType = {
   photo: null | string;
   phone: null | string;
   organization: null | string;
+};
+
+export type UserEditType = {
+  id: string;
+  role_id?: string
+  country_id: string;
+  simulation_id?: string;
+  area_id?: string;
+  group_id?: string;
+  subgroup_id?: string;
+  name: string;
+  last_name: string;
+  email?: string;
+  status?: boolean;
+  phone: string;
+  organization: string;
+};
+
+export type AuthType = {
+  user: null | UserType;
 };
 
 export type GeneralSliceType = {

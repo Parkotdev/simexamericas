@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\CountryController;
+use App\Http\Controllers\UserController;
 use App\Http\Resources\UserCollection;
 use App\Models\Country;
 use App\Models\Simulation;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -29,6 +30,20 @@ Route::get('/getDataSignUp', function () {
 
 Route::get('/userAuth', function () {
     return Auth::check() ? new UserCollection([Auth::user()]) : null;
+});
+
+Route::middleware('auth:sanctum')->group(function () {
+    // COUNTRY
+    Route::controller(CountryController::class)->group(function () {
+        Route::get('/countries', 'index');
+    });
+
+    // USER
+    Route::controller(UserController::class)->group(function () {
+        Route::get('/users', 'index');
+        Route::put('/users/{id}', 'update');
+        Route::post('/userPhoto', 'updatePhoto');
+    });
 });
 
 /* Route::get('/dashboard', function () {

@@ -2,20 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\CountryCollection;
-use App\Models\Country;
+use App\Models\File;
 use Illuminate\Http\Request;
 
-class CountryController extends Controller
+class FileController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \App\Http\Resources\CountryCollection
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return new CountryCollection(Country::orderBy('name')->get());
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
     }
 
     /**
@@ -32,10 +41,21 @@ class CountryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Country  $country
+     * @param  \App\Models\File  $file
      * @return \Illuminate\Http\Response
      */
-    public function show(Country $country)
+    public function show(File $file)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\File  $file
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(File $file)
     {
         //
     }
@@ -44,10 +64,10 @@ class CountryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Country  $country
+     * @param  \App\Models\File  $file
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Country $country)
+    public function update(Request $request, File $file)
     {
         //
     }
@@ -55,10 +75,10 @@ class CountryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Country  $country
+     * @param  \App\Models\File  $file
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Country $country)
+    public function destroy(File $file)
     {
         //
     }

@@ -95,11 +95,23 @@ export default function FormSignIn() {
             }
           })
           .catch((error) => {
-            Swal.fire({ title: error.response.data.message, icon: "error" });
+            Swal.fire({
+              position: "top-end",
+              icon: "error",
+              showConfirmButton: false,
+              timer: 2000,
+              title: error.response.data.message
+            });
           });
       } catch (error) {
-        console.log(error);
-        Swal.fire({ title: "Oops", text: t("common.error") || "", icon: "error" });
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          showConfirmButton: false,
+          timer: 2000,
+          title: "Oops",
+          text: t("common.error") || ""
+        });
       }
 
       dispatch(setLoading(false));

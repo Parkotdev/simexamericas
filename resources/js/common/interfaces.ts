@@ -8,6 +8,8 @@ export interface CountryI {
   name: string;
   timezone: string;
   gmt: string;
+  created_at: null | string;
+  updated_at: null | string;
 }
 
 export interface DataSignUpI {

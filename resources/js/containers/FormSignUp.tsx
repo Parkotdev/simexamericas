@@ -290,7 +290,7 @@ export default function FormSignUp({ onClose, countries, simulations }: SignInPr
                     src={`/images/flags/${option.iso_code.toLowerCase()}.png`}
                     className="w-auto h-auto"
                   />
-                  {option.name}, {option.timezone}, {option.gmt}
+                  {`${option.name}, ${option.timezone}, ${option.gmt}`}
                 </Box>
               )}
               renderInput={(params) => (

@@ -54,6 +54,7 @@
     "simulation": "Simulation",
     "area": "Area",
     "group": "Group",
-    "subgroup": "Subgroup"
+    "subgroup": "Subgroup",
+    "profile": "User profile"
   }
 }

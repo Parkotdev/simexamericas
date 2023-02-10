@@ -5,6 +5,7 @@ import type { UserSliceType, UserType } from "@/common/types";
 
 const initialState: UserSliceType = {
   data: {
+    id: "",
     role: {
       id: "",
       name_es: "",

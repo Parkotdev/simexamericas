@@ -8,12 +8,16 @@
     "error": "Sorry, an error has occurred.",
     "select": "--Select--",
     "save": "Save",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "edit": "Edit"
   },
   "valid": {
     "required": "Required",
     "email": "Invalid email",
-    "password": "Password does not match"
+    "password": "Password does not match",
+    "image-size-5": "The maximum image size must be 5MB",
+    "image-format": "Only images in .png or .jpg format are allowed",
+    "fields-errors": "There are fields with errors, please verify"
   },
   "auth": {
     "login": "Login",
@@ -54,6 +58,10 @@
     "simulation": "Simulation",
     "area": "Area",
     "group": "Group",
-    "subgroup": "Subgroup"
+    "subgroup": "Subgroup",
+    "profile": "User profile",
+    "edit": "User edit",
+    "edit-success": "User successfully edited",
+    "photo-success": "Photo successfully modified"
   }
 }

@@ -8,12 +8,16 @@
     "error": "Lo sentimos, ha ocurrido un error.",
     "select": "--Seleccione--",
     "save": "Guardar",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "edit": "Editar"
   },
   "valid": {
     "required": "Obligatorio",
     "email": "Correo electrónico no válido",
-    "password": "La contraseña no coincide"
+    "password": "La contraseña no coincide",
+    "image-size-5": "El tamaño máximo de la imagen debe ser de 5MB",
+    "image-format": "Solo se permiten imágenes con formato .png o .jpg",
+    "fields-errors": "Existen campos con errores, verifique por favor"
   },
   "auth": {
     "login": "Inicio de sesión",
@@ -38,7 +42,7 @@
     "audit": "Auditoria"
   },
   "navbar": {
-    "sign-out": "Sign out"
+    "sign-out": "Cerrar sesión"
   },
   "simulation": {
     "title": "Simulación"
@@ -54,6 +58,10 @@
     "simulation": "Simulación",
     "area": "Área",
     "group": "Grupo",
-    "subgroup": "Subgrupo"
+    "subgroup": "Subgrupo",
+    "profile": "Perfil de usuario",
+    "edit": "Editar usuario",
+    "edit-success": "Usuario editado exitosamente",
+    "photo-success": "Foto modificada exitosamente"
   }
 }

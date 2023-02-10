@@ -5,12 +5,12 @@ import { AppBar, Box, Button, Paper, Toolbar } from "@mui/material";
 
 import type { CountryType, SimulationType } from "@/common/types";
 
-import logo from "../../assets/images/logo.png";
-import bgOPSes from "../../assets/images/bg-ops-es.png";
-import bgOPSen from "../../assets/images/bg-ops-en.png";
-import bgOPSfr from "../../assets/images/bg-ops-fr.png";
-import bgOPSpt from "../../assets/images/bg-ops-pt.png";
-import bgNavBar from "../../assets/images/bg-navbar.png";
+import logo from "@/assets/images/logo.png";
+import bgOPSes from "@/assets/images/bg-ops-es.png";
+import bgOPSen from "@/assets/images/bg-ops-en.png";
+import bgOPSfr from "@/assets/images/bg-ops-fr.png";
+import bgOPSpt from "@/assets/images/bg-ops-pt.png";
+import bgNavBar from "@/assets/images/bg-navbar.png";
 
 import { FormSignIn } from "@/containers";
 import { Language, ModalSignUp } from "@/components";

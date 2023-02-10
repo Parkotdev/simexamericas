@@ -6,3 +6,4 @@ export { default as NavBar } from "./NavBar";
 export { default as Layout } from "./Layout";
 
 export { default as ModalSignUp } from "./modals/ModalSignUp";
+export { default as ModalProfile } from "./modals/ModalProfile";

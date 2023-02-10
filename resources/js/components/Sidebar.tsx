@@ -3,12 +3,10 @@ import { useTranslation } from "react-i18next";
 import { useProSidebar } from "react-pro-sidebar";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { Avatar, Badge, Button } from "@mui/material";
-import axios from "axios";
-import Swal from "sweetalert2";
 import { getRoleName } from "@/common/utils";
 import { useAppSelector } from "@/context";
 
-import type { CountryType } from "@/common/types";
+import type { LayoutProps } from "@/common/props";
 
 import BGSidebarHeader from "@/assets/images/logo.png";
 import BGSidebarFooter from "@/assets/images/bg-sidebar-footer.png";
@@ -30,13 +28,12 @@ import LinkRoundedIcon from "@mui/icons-material/LinkRounded";
 
 import ModalProfile from "@/components/modals/ModalProfile";
 
-export default function SidebarC() {
+export default function SidebarC({ countries }: LayoutProps) {
   const { t, i18n } = useTranslation();
   const { broken, collapsed } = useProSidebar();
   const user = useAppSelector((state) => state.user.data);
 
   const [open, setOpen] = React.useState(false);
-  const [countries, setCountries] = React.useState<CountryType[]>([]);
   const [cant, setCant] = React.useState({
     blackboard: 0,
     mail: 0,
@@ -101,39 +98,6 @@ export default function SidebarC() {
       </div>
     );
   };
-
-  React.useEffect(() => {
-    const getCountries = async () => {
-      await axios
-        .get("/countries")
-        .then((res) => {
-          if (res.status === 200) {
-            setCountries(res.data.countries);
-          } else {
-            Swal.fire({
-              position: "top-end",
-              icon: "error",
-              showConfirmButton: false,
-              timer: 2000,
-              title: "Oops",
-              text: t("common.error") || ""
-            });
-          }
-        })
-        .catch(() => {
-          Swal.fire({
-            position: "top-end",
-            icon: "error",
-            showConfirmButton: false,
-            timer: 2000,
-            title: "Oops",
-            text: t("common.error") || ""
-          });
-        });
-    };
-
-    getCountries();
-  }, []);
 
   return (
     <>

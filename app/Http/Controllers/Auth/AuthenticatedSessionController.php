@@ -32,6 +32,7 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         App::setLocale($request->locale);
+
         $request->authenticate();
 
         $request->session()->regenerate();

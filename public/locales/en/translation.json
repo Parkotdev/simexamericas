@@ -42,6 +42,9 @@
     "audit": "Audit"
   },
   "navbar": {
+    "reload": "Reload all",
+    "account": "My account",
+    "password": "Change password",
     "sign-out": "Sign out"
   },
   "simulation": {
@@ -62,6 +65,10 @@
     "profile": "User profile",
     "edit": "User edit",
     "edit-success": "User successfully edited",
-    "photo-success": "Photo successfully modified"
+    "photo-success": "Photo successfully modified",
+    "password-success": "Password successfully changed",
+    "password-current": "Current password",
+    "password-new": "New password",
+    "change": "Change"
   }
 }

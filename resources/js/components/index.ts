@@ -7,3 +7,4 @@ export { default as Layout } from "./Layout";
 
 export { default as ModalSignUp } from "./modals/ModalSignUp";
 export { default as ModalProfile } from "./modals/ModalProfile";
+export { default as ModalChangePassword } from "./modals/ModalChangePassword";

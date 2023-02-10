@@ -42,6 +42,9 @@
     "audit": "Auditoria"
   },
   "navbar": {
+    "reload": "Recargar a todos",
+    "account": "Mi cuenta",
+    "password": "Cambiar contraseña",
     "sign-out": "Cerrar sesión"
   },
   "simulation": {
@@ -62,6 +65,10 @@
     "profile": "Perfil de usuario",
     "edit": "Editar usuario",
     "edit-success": "Usuario editado exitosamente",
-    "photo-success": "Foto modificada exitosamente"
+    "photo-success": "Foto modificada exitosamente",
+    "password-success": "Contraseña cambiada exitosamente",
+    "password-current": "Contraseña actual",
+    "password-new": "Nueva contraseña",
+    "change": "Cambiar"
   }
 }

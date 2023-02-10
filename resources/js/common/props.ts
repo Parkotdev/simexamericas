@@ -43,3 +43,7 @@ export interface FormProfileProps {
   onClose: () => void;
   countries: CountryType[];
 }
+
+export interface LayoutProps {
+  countries: CountryType[];
+}

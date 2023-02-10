@@ -1,0 +1,59 @@
+{
+  "common": {
+    "accept": "Aceptar",
+    "language": "Lenguaje",
+    "user": "Usuario",
+    "password": "Contraseña",
+    "close": "Cerrar",
+    "error": "Lo sentimos, ha ocurrido un error.",
+    "select": "--Seleccione--",
+    "save": "Guardar",
+    "cancel": "Cancelar"
+  },
+  "valid": {
+    "required": "Obligatorio",
+    "email": "Correo electrónico no válido",
+    "password": "La contraseña no coincide"
+  },
+  "auth": {
+    "login": "Inicio de sesión",
+    "sign-in": "Iniciar sesión",
+    "sign-up": "Registrarse",
+    "forgot": "Olvidó su contraseña",
+    "registration": "Registro de usuario"
+  },
+  "sidebar": {
+    "simulations": "Simulaciones",
+    "board-excon": "Tablero EXCON",
+    "board-participant": "Tablero Participante",
+    "blackboard": "Pizarra",
+    "document": "Documentos",
+    "external-link": "Enlaces externos",
+    "reports": "Reportes",
+    "users": "Usuarios",
+    "configuration": "Configuración",
+    "events": "Eventos",
+    "incidents": "Incidentes",
+    "countries": "Paises",
+    "audit": "Auditoria"
+  },
+  "navbar": {
+    "sign-out": "Sign out"
+  },
+  "simulation": {
+    "title": "Simulación"
+  },
+  "user": {
+    "name": "Nombre",
+    "last_name": "Apellidos",
+    "email": "Correo electrónico",
+    "country": "País",
+    "password-confirm": "Confirmar contraseña",
+    "phone": "Teléfono",
+    "organization": "Organización",
+    "simulation": "Simulación",
+    "area": "Área",
+    "group": "Grupo",
+    "subgroup": "Subgrupo"
+  }
+}

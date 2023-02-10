@@ -1,0 +1,59 @@
+{
+  "common": {
+    "accept": "Accept",
+    "language": "Language",
+    "user": "User",
+    "password": "Password",
+    "close": "Close",
+    "error": "Sorry, an error has occurred.",
+    "select": "--Select--",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "valid": {
+    "required": "Required",
+    "email": "Invalid email",
+    "password": "Password does not match"
+  },
+  "auth": {
+    "login": "Login",
+    "sign-in": "Sign in",
+    "sign-up": "Sign up",
+    "forgot": "Forgot your password",
+    "registration": "User registration"
+  },
+  "sidebar": {
+    "simulations": "Simulations",
+    "board-excon": "Board EXCON",
+    "board-participant": "Board Participant",
+    "blackboard": "Blackboard",
+    "document": "Documents",
+    "external-link": "External link",
+    "reports": "Reports",
+    "users": "Users",
+    "configuration": "Configuration",
+    "events": "Events",
+    "incidents": "Incidents",
+    "countries": "Countries",
+    "audit": "Audit"
+  },
+  "navbar": {
+    "sign-out": "Sign out"
+  },
+  "simulation": {
+    "title": "Simulation"
+  },
+  "user": {
+    "name": "Name",
+    "last_name": "Last name",
+    "email": "Email",
+    "country": "Country",
+    "password-confirm": "Confirm password",
+    "phone": "Phone",
+    "organization": "Organization",
+    "simulation": "Simulation",
+    "area": "Area",
+    "group": "Group",
+    "subgroup": "Subgroup"
+  }
+}

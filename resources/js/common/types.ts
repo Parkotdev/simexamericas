@@ -100,7 +100,7 @@ export type UserType = {
 
 export type UserEditType = {
   id: string;
-  role_id?: string
+  role_id?: string;
   country_id: string;
   simulation_id?: string;
   area_id?: string;
@@ -120,6 +120,8 @@ export type AuthType = {
 
 export type GeneralSliceType = {
   loading: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  socket: any;
 };
 
 export type UserSliceType = {

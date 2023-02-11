@@ -3,9 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { GeneralSliceType } from "@/common/types";
 
-
 const initialState: GeneralSliceType = {
-  loading: false
+  loading: false,
+  socket: null
 };
 
 export const generalSlice = createSlice({
@@ -14,11 +14,15 @@ export const generalSlice = createSlice({
   reducers: {
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
+    },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    setSocket: (state, action: PayloadAction<any>) => {
+      state.socket = action.payload;
     }
   }
 });
 
 // Action creators are generated for each case reducer function
-export const { setLoading } = generalSlice.actions;
+export const { setLoading, setSocket } = generalSlice.actions;
 
 export default generalSlice.reducer;

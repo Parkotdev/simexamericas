@@ -2,7 +2,9 @@ import React from "react";
 import axios from "axios";
 import { router } from "@inertiajs/react";
 import { Backdrop, CircularProgress } from "@mui/material";
-import { setUser, useAppDispatch, useAppSelector } from "@/context";
+import { io } from "socket.io-client";
+import config from "@/common/config";
+import { setSocket, setUser, useAppDispatch, useAppSelector } from "@/context";
 
 import type { GeneralProps } from "@/common/props";
 
@@ -16,8 +18,11 @@ export default function ServiceProvider({ children }: GeneralProps) {
         await axios
           .get("/userAuth")
           .then((res) => {
-            if (res.status === 200) {
+            if (res.status === 200 && res.data) {
               dispatch(setUser(res.data.users[0]));
+              dispatch(setSocket(io(`${config.host}:${config.port}`)));
+            } else {
+              router.get("/login");
             }
           })
           .catch(() => router.get("/login"));

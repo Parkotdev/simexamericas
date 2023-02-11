@@ -1,7 +1,8 @@
 import { AuthType, CountryType, SimulationType, ZiggyType } from "./types";
 
 export interface PageProps {
-  [key: string]: unknown;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any;
 }
 
 export interface IndexProps {

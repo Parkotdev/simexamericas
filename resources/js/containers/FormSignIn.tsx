@@ -3,12 +3,13 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { useTranslation } from "react-i18next";
 import { router } from "@inertiajs/react";
 import axios from "axios";
+import { io } from "socket.io-client";
 import { Avatar, Box, Button, FormHelperText, IconButton, InputAdornment, TextField, Typography } from "@mui/material";
 import Swal from "sweetalert2";
 import config from "@/common/config";
 
 import { validEmail } from "@/common/utils";
-import { setLoading, useAppDispatch } from "@/context";
+import { setLoading, setSocket, setUser, useAppDispatch } from "@/context";
 
 import LockRoundedIcon from "@mui/icons-material/LockRounded";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
@@ -58,6 +59,25 @@ export default function FormSignIn() {
     setHelpCaptcha(token ? "" : t("valid.required") || "");
   };
 
+  const getUser = async () => {
+    try {
+      await axios
+        .get("/userAuth")
+        .then((res) => {
+          if (res.status === 200 && res.data) {
+            dispatch(setUser(res.data.users[0]));
+            dispatch(setSocket(io(`${config.host}:${config.port}`)));
+            router.get("/");
+          } else {
+            router.get("/login");
+          }
+        })
+        .catch(() => router.get("/login"));
+    } catch (error) {
+      router.get("/login");
+    }
+  };
+
   const handleLogin = async () => {
     let is_valid = true;
 
@@ -91,7 +111,7 @@ export default function FormSignIn() {
           })
           .then((res) => {
             if (res.status === 200) {
-              router.get("/");
+              getUser();
             }
           })
           .catch((error) => {

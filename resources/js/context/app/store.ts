@@ -7,7 +7,18 @@ export const store = configureStore({
   reducer: {
     general: generalReducer,
     user: userReducer
-  }
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        // Ignore these action types
+        ignoredActions: ["general/setSocket"],
+        // Ignore these field paths in all actions
+        ignoredActionPaths: ["general.socket"],
+        // Ignore these paths in the state
+        ignoredPaths: ["general.socket"]
+      }
+    })
   // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger)
 });
 

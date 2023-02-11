@@ -22,7 +22,7 @@ createInertiaApp({
       <Provider store={store}>
         <CssBaseline />
 
-        <ServiceProvider {...props}>
+        <ServiceProvider>
           <ProSidebarProvider>
             <App {...props} />
           </ProSidebarProvider>

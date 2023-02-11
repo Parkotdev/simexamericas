@@ -32,6 +32,7 @@ export default function SidebarC({ countries }: LayoutProps) {
   const { t, i18n } = useTranslation();
   const { broken, collapsed } = useProSidebar();
   const user = useAppSelector((state) => state.user.data);
+  const [userInfo, setUserInfo] = React.useState(user);
 
   const [open, setOpen] = React.useState(false);
   const [cant, setCant] = React.useState({
@@ -98,6 +99,11 @@ export default function SidebarC({ countries }: LayoutProps) {
       </div>
     );
   };
+
+  React.useEffect(() => {
+    console.log(user);
+    setUserInfo(user);
+  }, [user])
 
   return (
     <>

@@ -44,6 +44,14 @@ class Simulation extends Model
     }
 
     /**
+     * Get the incidents associated with the simulation.
+     */
+    public function incidents()
+    {
+        return $this->belongsToMany(Incident::class);
+    }
+
+    /**
      * Get the status associated with the simulation.
      */
     public function status()
@@ -59,5 +67,55 @@ class Simulation extends Model
     public function users()
     {
         return $this->hasMany(User::class);
+    }
+
+    public function id(): string
+    {
+        return (string) $this->id;
+    }
+
+    public function name(): string
+    {
+        return (string) $this->name;
+    }
+
+    public function description(): string
+    {
+        return (string) $this->description;
+    }
+
+    public function logo(): string
+    {
+        return (string) $this->logo;
+    }
+
+    public function icon(): string
+    {
+        return (string) $this->icon;
+    }
+
+    public function date_start_real(): string
+    {
+        return (string) $this->date_start_real;
+    }
+
+    public function date_end_real(): string
+    {
+        return (string) $this->date_end_real;
+    }
+
+    public function date_start_sim(): string
+    {
+        return (string) $this->date_start_sim;
+    }
+
+    public function date_end_sim(): string
+    {
+        return (string) $this->date_end_sim;
+    }
+
+    public function pause(): bool
+    {
+        return (bool) $this->pause;
     }
 }

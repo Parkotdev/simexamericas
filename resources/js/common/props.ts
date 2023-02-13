@@ -1,4 +1,4 @@
-import { AuthType, CountryType, SimulationType, ZiggyType } from "./types";
+import { AuthType, CountryType, SimulationEditType, SimulationType, ZiggyType } from "./types";
 
 export interface PageProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -19,7 +19,7 @@ export interface GeneralProps {
 export interface SignInProps {
   onClose: () => void;
   countries: CountryType[];
-  simulations: SimulationType[];
+  simulations: SimulationEditType[];
 }
 
 /******* MODALS *******/
@@ -31,11 +31,15 @@ export interface ModalGeneralProps {
 
 export interface ModalSignUpProps extends ModalGeneralProps {
   countries: CountryType[];
-  simulations: SimulationType[];
+  simulations: SimulationEditType[];
 }
 
 export interface ModalProfileProps extends ModalGeneralProps {
   countries: CountryType[];
+}
+
+export interface ModalSimulation extends ModalGeneralProps {
+  simulation: SimulationType;
 }
 
 /***** END MODALS *****/
@@ -47,4 +51,10 @@ export interface FormProfileProps {
 
 export interface LayoutProps {
   countries: CountryType[];
+}
+
+export interface FilterProps {
+  onClear: () => void;
+  filterText: string;
+  onFilter: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }

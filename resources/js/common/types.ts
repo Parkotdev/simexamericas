@@ -29,18 +29,54 @@ export type CountryType = {
   updated_at: null | string;
 };
 
-export type SimulationType = {
+export type IncidentType = {
+  id: string;
+  event_id: string;
+  incident_es: string;
+  incident_en: string;
+  incident_fr: string;
+  incident_pt: string;
+};
+
+export type StatusType = {
+  id: string;
+  status_es: string;
+  status_en: string;
+  status_fr: string;
+  status_pt: string;
+};
+
+export type SimulationEditType = {
   id: string;
   country_id: string;
   incident_id: string;
   status_id: string;
   name: string;
   description: string;
-  logo: string;
-  icon: string;
+  logo: null | string;
+  icon: null | string;
   date_start_real: string;
   date_end_real: string;
   date_ini_sim: string;
+  date_end_sim: string;
+  pause: boolean;
+  created_at?: null | string;
+  updated_at?: null | string;
+};
+
+export type SimulationType = {
+  id: string;
+  country: CountryType;
+  incident: IncidentType;
+  incidents: IncidentType[];
+  status: StatusType;
+  name: string;
+  description: string;
+  logo: null | string;
+  icon: null | string;
+  date_start_real: string;
+  date_end_real: string;
+  date_start_sim: string;
   date_end_sim: string;
   pause: boolean;
   created_at: null | string;

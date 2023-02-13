@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CountryController;
+use App\Http\Controllers\StatusController;
 use App\Http\Controllers\UserController;
 use App\Http\Resources\UserCollection;
 use App\Models\Country;
@@ -44,16 +45,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/users/{id}', 'update');
         Route::post('/userPhoto', 'updatePhoto');
     });
+
+    // STATUS
+    Route::controller(StatusController::class)->group(function () {
+        Route::get('/statuses', 'index');
+    });
 });
-
-/* Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-}); */
 
 require __DIR__ . '/auth.php';

@@ -9,7 +9,11 @@
     "select": "--Select--",
     "save": "Save",
     "cancel": "Cancel",
-    "edit": "Edit"
+    "edit": "Edit",
+    "new": "New",
+    "new-a": "New",
+    "search": "Search",
+    "not-data": "No data to show"
   },
   "valid": {
     "required": "Required",
@@ -48,7 +52,12 @@
     "sign-out": "Sign out"
   },
   "simulation": {
-    "title": "Simulation"
+    "title": "Simulation",
+    "filter": "Filter",
+    "duplicate": "Duplicate",
+    "show": "Show",
+    "program": "Program",
+    "pause": "Pause"
   },
   "user": {
     "name": "Name",
@@ -69,6 +78,14 @@
     "password-success": "Password successfully changed",
     "password-current": "Current password",
     "password-new": "New password",
-    "change": "Change"
+    "change": "Change",
+    "status": "Status"
+  },
+  "table": {
+    "actions": "Actions",
+    "control": "Control",
+    "files": "Row per page",
+    "from": "from",
+    "all": "All"
   }
 }

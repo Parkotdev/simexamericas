@@ -9,7 +9,11 @@
     "select": "--Seleccione--",
     "save": "Guardar",
     "cancel": "Cancelar",
-    "edit": "Editar"
+    "edit": "Editar",
+    "new": "Nuevo",
+    "new-a": "Nueva",
+    "search": "Buscar",
+    "not-data": "No existen datos para mostrar"
   },
   "valid": {
     "required": "Obligatorio",
@@ -48,7 +52,12 @@
     "sign-out": "Cerrar sesión"
   },
   "simulation": {
-    "title": "Simulación"
+    "title": "Simulación",
+    "filter": "Filtrar",
+    "duplicate": "Duplicar",
+    "show": "Mostrar",
+    "program": "Program",
+    "pause": "Pausar"
   },
   "user": {
     "name": "Nombre",
@@ -69,6 +78,14 @@
     "password-success": "Contraseña cambiada exitosamente",
     "password-current": "Contraseña actual",
     "password-new": "Nueva contraseña",
-    "change": "Cambiar"
+    "change": "Cambiar",
+    "status": "Estado"
+  },
+  "table": {
+    "actions": "Acciones",
+    "control": "Control",
+    "files": "Filas por páginas",
+    "from": "de",
+    "all": "Todos"
   }
 }

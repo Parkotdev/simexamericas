@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ConnectorController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\SimulationController;
 use App\Http\Controllers\StatusController;
@@ -35,6 +36,13 @@ Route::get('/userAuth', function () {
 });
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/getToken', function () {
+        return csrf_token();
+    });
+
+    // CONNECTOR
+    Route::post('/connector', [ConnectorController::class, 'connector']);
+
     // COUNTRY
     Route::controller(CountryController::class)->group(function () {
         Route::get('/countries', 'index');
@@ -47,14 +55,15 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/userPhoto', 'updatePhoto');
     });
 
-    // SIMULATION
-    Route::controller(SimulationController::class)->group(function () {
-        Route::get('/simulationData', 'simulationData');
-    });
-
     // STATUS
     Route::controller(StatusController::class)->group(function () {
         Route::get('/statuses', 'index');
+    });
+
+    // SIMULATION
+    Route::controller(SimulationController::class)->group(function () {
+        Route::get('/simulationData', 'simulationData');
+        Route::post('/simulation', 'store');
     });
 });
 

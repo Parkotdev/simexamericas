@@ -29,16 +29,9 @@ import { setLoading, useAppDispatch, useAppSelector } from "@/context";
 
 import type { PageProps } from "@/common/props";
 import type { TableColumn } from "react-data-table-component";
-import type {
-  CountryType,
-  IncidentType,
-  SimulationDataType,
-  SimulationEditType,
-  SimulationType,
-  StatusType
-} from "@/common/types";
+import type { IncidentType, SimulationDataType, SimulationEditType, SimulationType } from "@/common/types";
 
-import { BootstrapTooltip, Filter, Layout, ModalSimulation } from "@/components";
+import { BootstrapTooltip, Filter, Layout, ModalSimulation, ModalSimulationShow } from "@/components";
 
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import FilterAltRoundedIcon from "@mui/icons-material/FilterAltRounded";
@@ -63,9 +56,10 @@ export default function Index({ auth }: PageProps) {
   const admin = user.role.name_en === "super-administrator" || user.role.name_en === "administrator";
 
   const [openSimulation, setOpenSimulation] = React.useState(false);
+  const [openSimulationShow, setOpenSimulationShow] = React.useState(false);
 
   const [filterText, setFilterText] = React.useState("");
-  const [dialogText, setDialogText] = React.useState("");
+  const [modalTitle, setModalTitle] = React.useState("");
 
   const [data, setData] = React.useState<SimulationDataType>({
     statuses: [],
@@ -86,16 +80,27 @@ export default function Index({ auth }: PageProps) {
       name: "",
       timezone: "",
       gmt: "",
-      created_at: "",
-      updated_at: ""
+      created_at: null,
+      updated_at: null
     },
     incident: {
       id: "",
-      event_id: "",
+      event: {
+        id: "",
+        incidents: [],
+        event_es: "",
+        event_en: "",
+        event_fr: "",
+        event_pt: "",
+        created_at: null,
+        updated_at: null
+      },
       incident_es: "",
       incident_en: "",
       incident_fr: "",
-      incident_pt: ""
+      incident_pt: "",
+      created_at: null,
+      updated_at: null
     },
     incidents: [],
     status: {
@@ -103,7 +108,9 @@ export default function Index({ auth }: PageProps) {
       status_es: "",
       status_en: "",
       status_fr: "",
-      status_pt: ""
+      status_pt: "",
+      created_at: null,
+      updated_at: null
     },
     name: "",
     description: "",
@@ -127,10 +134,10 @@ export default function Index({ auth }: PageProps) {
     description: getDescription,
     logo: null,
     icon: null,
-    date_start_real: "",
-    date_end_real: "",
-    date_ini_sim: "",
-    date_end_sim: "",
+    date_start_real: moment().format("YYYY-MM-DD HH:mm"),
+    date_end_real: moment().format("YYYY-MM-DD HH:mm"),
+    date_start_sim: moment().format("YYYY-MM-DD HH:mm"),
+    date_end_sim: moment().format("YYYY-MM-DD HH:mm"),
     pause: false
   });
 
@@ -139,7 +146,7 @@ export default function Index({ auth }: PageProps) {
 
   const handleShow = (row: SimulationType) => {
     setSimulation(row);
-    setOpenSimulation(true);
+    setOpenSimulationShow(true);
   };
 
   const handleDuplicate = (id: string) => {
@@ -418,7 +425,7 @@ export default function Index({ auth }: PageProps) {
 
     const newSimulation = () => {
       setForm({ ...form, id: "" });
-      setDialogText(t("common.new") || "");
+      setModalTitle(t("common.new-a") || "");
       setOpenSimulation(true);
     };
 
@@ -480,7 +487,15 @@ export default function Index({ auth }: PageProps) {
 
   return (
     <>
-      <ModalSimulation open={openSimulation} onClose={() => setOpenSimulation(false)} simulation={simulation} />
+      <ModalSimulation
+        open={openSimulation}
+        onClose={() => setOpenSimulation(false)}
+        title={modalTitle}
+        data={data}
+        form={form}
+        setForm={setForm}
+      />
+      <ModalSimulationShow open={openSimulationShow} onClose={() => setOpenSimulationShow(false)} simulation={simulation} />
 
       <Layout>
         <div className="flex justify-between mb-4">

@@ -1,4 +1,4 @@
-import { AuthType, CountryType, SimulationEditType, SimulationType, ZiggyType } from "./types";
+import { AuthType, CountryType, SimulationDataType, SimulationEditType, SimulationType, ZiggyType } from "./types";
 
 export interface PageProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -39,6 +39,13 @@ export interface ModalProfileProps extends ModalGeneralProps {
 }
 
 export interface ModalSimulation extends ModalGeneralProps {
+  title: string;
+  data: SimulationDataType;
+  form: SimulationEditType;
+  setForm: React.Dispatch<SimulationEditType>;
+}
+
+export interface ModalSimulationShow extends ModalGeneralProps {
   simulation: SimulationType;
 }
 
@@ -57,4 +64,10 @@ export interface FilterProps {
   onClear: () => void;
   filterText: string;
   onFilter: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+export interface EditorProps {
+  role: string;
+  description: string;
+  setDescription: (value: string) => void;
 }

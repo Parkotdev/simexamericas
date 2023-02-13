@@ -1,5 +1,5 @@
 import type { TFunction } from "i18next";
-import type { IncidentType, RoleType, StatusType } from "./types";
+import type { EventType, IncidentType, RoleType, StatusType } from "./types";
 
 export const validEmail = (email: string) => {
   return /^([\da-z_\\.-]+)@([\da-z\\.-]+)\.([a-z\\.]{2,6})$/.exec(email);
@@ -57,6 +57,19 @@ export const getIncidentsName = (locale: string, incidents: IncidentType[]) => {
   }
 };
 
+export const getEventName = (locale: string, event: EventType) => {
+  switch (locale) {
+    case "en":
+      return event.event_en;
+    case "fr":
+      return event.event_fr;
+    case "pt":
+      return event.event_pt;
+    default:
+      return event.event_es;
+  }
+};
+
 export const paginationComponentOptions = (t: TFunction) => {
   return {
     rowsPerPageText: t("table.files"),
@@ -99,4 +112,4 @@ export const tableCustomStyles = {
 };
 
 export const getDescription =
-  "<p><strong>1. Justificación y antecedentes</strong></p><p>&nbsp;</p><p><strong>2. Propósito de la simulación</strong></p><p>&nbsp;</p><p><strong>3. Objetivos de entrenamiento</strong></p><p>&nbsp;</p><p><strong>4. Escenarios</strong></p><p>&nbsp;</p><p><strong>5. Grupos objetivos</strong></p><p>&nbsp;</p><p><strong>6. Metodología</strong></p><p>&nbsp;</p>";
+  "<p><strong>1. Justificación y antecedentes</strong></p><p>&nbsp;</p><p><br/><strong>2. Propósito de la simulación</strong></p><p>&nbsp;</p><p><br/><strong>3. Objetivos de entrenamiento</strong></p><p>&nbsp;</p><p><br/><strong>4. Escenarios</strong></p><p>&nbsp;</p><p><br/><strong>5. Grupos objetivos</strong></p><p>&nbsp;</p><p><br/><strong>6. Metodología</strong></p><p>&nbsp;</p>";

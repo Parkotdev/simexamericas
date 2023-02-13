@@ -72,7 +72,7 @@ export type SimulationEditType = {
   icon: null | string;
   date_start_real: string;
   date_end_real: string;
-  date_ini_sim: string;
+  date_start_sim: string;
   date_end_sim: string;
   pause: boolean;
   created_at?: null | string;
@@ -181,7 +181,7 @@ export type UserSliceType = {
 
 export type SimulationDataType = {
   statuses: StatusType[];
-  events: IncidentType[];
+  events: EventType[];
   incidents: IncidentType[];
   countries: CountryType[];
 };

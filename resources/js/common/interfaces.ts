@@ -17,3 +17,11 @@ export interface DataSignUpI {
   groups: GroupType[];
   subgroups: SubgroupType[];
 }
+
+export interface LogoI {
+  element: null | File;
+  color: string;
+  text: null | string;
+  link: undefined | string;
+  delete: boolean;
+}

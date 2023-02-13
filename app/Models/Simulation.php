@@ -118,4 +118,14 @@ class Simulation extends Model
     {
         return (bool) $this->pause;
     }
+
+    public function created_at(): string
+    {
+        return (string) $this->created_at;
+    }
+
+    public function updated_at(): string
+    {
+        return (string) $this->updated_at;
+    }
 }

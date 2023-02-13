@@ -9,7 +9,10 @@ class Rating extends Model
 {
     use HasFactory;
 
+    public $incrementing = false;
+
     protected $fillable = [
+        'id',
         'name_es',
         'name_en',
         'name_fr',

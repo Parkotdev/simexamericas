@@ -9,7 +9,10 @@ class Simulation extends Model
 {
     use HasFactory;
 
+    public $incrementing = false;
+
     protected $fillable = [
+        'id',
         'country_id',
         'incident_id',
         'status_id',

@@ -9,7 +9,10 @@ class Area extends Model
 {
     use HasFactory;
 
+    public $incrementing = false;
+
     protected $fillable = [
+        'id',
         'simulation_id',
         'name',
         'description',

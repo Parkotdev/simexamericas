@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Status extends Model
+class Audit extends Model
 {
     use HasFactory;
 
@@ -13,14 +13,10 @@ class Status extends Model
 
     protected $fillable = [
         'id',
-        'status_es',
-        'status_en',
-        'status_fr',
-        'status_pt'
+        'user_id',
+        'name',
+        'type_id',
+        'type',
+        'description'
     ];
-
-    public function simulations()
-    {
-        return $this->hasMany(Simulation::class);
-    }
 }

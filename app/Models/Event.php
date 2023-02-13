@@ -9,7 +9,10 @@ class Event extends Model
 {
     use HasFactory;
 
+    public $incrementing = false;
+
     protected $fillable = [
+        'id',
         'event_es',
         'event_en',
         'event_fr',

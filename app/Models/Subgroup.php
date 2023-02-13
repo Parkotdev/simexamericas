@@ -9,7 +9,10 @@ class Subgroup extends Model
 {
     use HasFactory;
 
+    public $incrementing = false;
+
     protected $fillable = [
+        'id',
         'group_id',
         'name',
         'description',

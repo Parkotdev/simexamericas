@@ -9,7 +9,10 @@ class Incident extends Model
 {
     use HasFactory;
 
+    public $incrementing = false;
+
     protected $fillable = [
+        'id',
         'event_id',
         'incident_es',
         'incident_en',

@@ -30,6 +30,41 @@ class Incident extends Model
 
     public function simulations()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(Simulation::class);
+    }
+
+    public function id(): string
+    {
+        return (string) $this->id;
+    }
+
+    public function incident_es(): string
+    {
+        return (string) $this->incident_es;
+    }
+
+    public function incident_en(): string
+    {
+        return (string) $this->incident_en;
+    }
+
+    public function incident_fr(): string
+    {
+        return (string) $this->incident_fr;
+    }
+
+    public function incident_pt(): string
+    {
+        return (string) $this->incident_pt;
+    }
+
+    public function created_at(): string
+    {
+        return (string) $this->created_at;
+    }
+
+    public function updated_at(): string
+    {
+        return (string) $this->updated_at;
     }
 }

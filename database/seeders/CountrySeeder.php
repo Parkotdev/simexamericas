@@ -24,5 +24,6 @@ class CountrySeeder extends Seeder
         $country->phone_code = "+93";
         $country->timezone = "Asia/Kabul";
         $country->gmt = "UTC +04:30";
+        $country->save();
     }
 }

@@ -29,13 +29,26 @@ export type CountryType = {
   updated_at: null | string;
 };
 
+export type EventType = {
+  id: string;
+  incidents: IncidentType[];
+  event_es: string;
+  event_en: string;
+  event_fr: string;
+  event_pt: string;
+  created_at: null | string;
+  updated_at: null | string;
+};
+
 export type IncidentType = {
   id: string;
-  event_id: string;
+  event: EventType;
   incident_es: string;
   incident_en: string;
   incident_fr: string;
   incident_pt: string;
+  created_at: null | string;
+  updated_at: null | string;
 };
 
 export type StatusType = {
@@ -44,6 +57,8 @@ export type StatusType = {
   status_en: string;
   status_fr: string;
   status_pt: string;
+  created_at: null | string;
+  updated_at: null | string;
 };
 
 export type SimulationEditType = {
@@ -162,4 +177,11 @@ export type GeneralSliceType = {
 
 export type UserSliceType = {
   data: UserType;
+};
+
+export type SimulationDataType = {
+  statuses: StatusType[];
+  events: IncidentType[];
+  incidents: IncidentType[];
+  countries: CountryType[];
 };

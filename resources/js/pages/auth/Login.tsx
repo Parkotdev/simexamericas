@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import axios from "axios";
 import { AppBar, Box, Button, Paper, Toolbar } from "@mui/material";
 
-import type { CountryType, SimulationType } from "@/common/types";
+import type { CountryType, SimulationEditType } from "@/common/types";
 
 import logo from "@/assets/images/logo.png";
 import bgOPSes from "@/assets/images/bg-ops-es.png";
@@ -32,7 +32,7 @@ export default function Login() {
   const { t, i18n } = useTranslation();
   const [openSignUp, setOpenSignUp] = React.useState(false);
   const [countries, setCountries] = React.useState<CountryType[]>([]);
-  const [simulations, setSimulations] = React.useState<SimulationType[]>([]);
+  const [simulations, setSimulations] = React.useState<SimulationEditType[]>([]);
 
   React.useEffect(() => {
     const getData = async () => {

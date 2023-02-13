@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CountryController;
+use App\Http\Controllers\SimulationController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\UserController;
 use App\Http\Resources\UserCollection;
@@ -44,6 +45,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/users', 'index');
         Route::put('/users/{id}', 'update');
         Route::post('/userPhoto', 'updatePhoto');
+    });
+
+    // SIMULATION
+    Route::controller(SimulationController::class)->group(function () {
+        Route::get('/simulationData', 'simulationData');
     });
 
     // STATUS

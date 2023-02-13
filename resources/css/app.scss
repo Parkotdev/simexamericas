@@ -28,3 +28,17 @@ a {
 .ps-sidebar-root.ps-toggled.ps-broken {
   background-color: white;
 }
+
+.ps-menu-root .ps-menuitem-root a {
+  &.ps-active,
+  &.ps-active:hover {
+    color: white;
+    border-radius: 0.25rem;
+    background-color: #007bff;
+  }
+
+  &:hover {
+    border-radius: 0.25rem;
+    background-color: #0000001a;
+  }
+}

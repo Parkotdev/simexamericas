@@ -57,7 +57,21 @@
     "duplicate": "Duplicate",
     "show": "Show",
     "program": "Program",
-    "pause": "Pause"
+    "pause": "Pause",
+    "areas-groups-subgroups": "Areas, Group, Subgroup",
+    "tasks-message": "Tasks, messages",
+    "message-general": "General message",
+    "message-excon": "Message to excon",
+    "icon": "Icon",
+    "date-created": "Created date",
+    "name": "Name",
+    "incident": "Incident",
+    "incidents": "Associated incidents",
+    "country": "Country to be carried out",
+    "date_start_real": "Real start date",
+    "date_end_real": "Real end date",
+    "date_start_sim": "Simulated start date",
+    "date_end_sim": "Simulated end date"
   },
   "user": {
     "name": "Name",

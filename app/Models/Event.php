@@ -23,4 +23,39 @@ class Event extends Model
     {
         return $this->hasMany(Incident::class);
     }
+
+    public function id(): string
+    {
+        return (string) $this->id;
+    }
+
+    public function event_es(): string
+    {
+        return (string) $this->event_es;
+    }
+
+    public function event_en(): string
+    {
+        return (string) $this->event_en;
+    }
+
+    public function event_fr(): string
+    {
+        return (string) $this->event_fr;
+    }
+
+    public function event_pt(): string
+    {
+        return (string) $this->event_pt;
+    }
+
+    public function created_at(): string
+    {
+        return (string) $this->created_at;
+    }
+
+    public function updated_at(): string
+    {
+        return (string) $this->updated_at;
+    }
 }

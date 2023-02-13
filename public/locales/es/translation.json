@@ -57,7 +57,21 @@
     "duplicate": "Duplicar",
     "show": "Mostrar",
     "program": "Program",
-    "pause": "Pausar"
+    "pause": "Pausar",
+    "areas-groups-subgroups": "Áreas, Grupos, Subgrupos",
+    "tasks-message": "Tareas, mensajes",
+    "message-general": "Mensaje general",
+    "message-excon": "Mensaje para excon",
+    "icon": "Ícono",
+    "date-created": "Fecha creada",
+    "name": "Nombre",
+    "incident": "Incidente",
+    "incidents": "Incidentes asociados",
+    "country": "País a efectuarse",
+    "date_start_real": "Fecha inicio real",
+    "date_end_real": "Fecha fin real",
+    "date_start_sim": "Fecha inicio simulada",
+    "date_end_sim": "Fecha fin simulada"
   },
   "user": {
     "name": "Nombre",

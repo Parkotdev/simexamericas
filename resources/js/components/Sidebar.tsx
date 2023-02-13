@@ -35,6 +35,7 @@ export default function SidebarC({ countries }: LayoutProps) {
   const [userInfo, setUserInfo] = React.useState(user);
 
   const [open, setOpen] = React.useState(false);
+  const [pathName, setPathName] = React.useState("");
   const [cant, setCant] = React.useState({
     blackboard: 0,
     mail: 0,
@@ -101,9 +102,12 @@ export default function SidebarC({ countries }: LayoutProps) {
   };
 
   React.useEffect(() => {
-    console.log(user);
+    setPathName(window.location.pathname);
+  }, []);
+
+  React.useEffect(() => {
     setUserInfo(user);
-  }, [user])
+  }, [user]);
 
   return (
     <>
@@ -120,7 +124,9 @@ export default function SidebarC({ countries }: LayoutProps) {
           )}
 
           <Menu className="px-2">
-            <MenuItem icon={<AirplayRoundedIcon />}>{!collapsed && t("sidebar.simulations")}</MenuItem>
+            <MenuItem icon={<AirplayRoundedIcon />} active={pathName === "/"}>
+              {!collapsed && t("sidebar.simulations")}
+            </MenuItem>
 
             <MenuItem icon={<AutoAwesomeMotionRoundedIcon />}>{!collapsed && t("sidebar.board-excon")}</MenuItem>
 

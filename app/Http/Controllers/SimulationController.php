@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\EventCollection;
+use App\Http\Resources\IncidentCollection;
+use App\Models\Country;
+use App\Models\Event;
+use App\Models\Incident;
 use App\Models\Simulation;
+use App\Models\Status;
 use Illuminate\Http\Request;
 
 class SimulationController extends Controller
@@ -13,16 +19,6 @@ class SimulationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
     {
         //
     }
@@ -50,17 +46,6 @@ class SimulationController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Simulation  $simulation
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Simulation $simulation)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -81,5 +66,15 @@ class SimulationController extends Controller
     public function destroy(Simulation $simulation)
     {
         //
+    }
+
+    public function simulationData()
+    {
+        return [
+            'statuses' => Status::all(),
+            'events' => new EventCollection(Event::all()),
+            'incidents' => new IncidentCollection(Incident::all()),
+            'countries' => Country::all()
+        ];
     }
 }

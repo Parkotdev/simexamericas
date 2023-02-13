@@ -2,6 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import DataTable from "react-data-table-component";
 import {
+  Avatar,
   Breadcrumbs,
   Button,
   Card,
@@ -16,11 +17,26 @@ import {
 import axios from "axios";
 import moment from "moment-timezone";
 import Swal from "sweetalert2";
-import { getDescription, getStatusName, paginationComponentOptions, tableCustomStyles } from "@/common/utils";
-import { useAppSelector } from "@/context";
+import {
+  getDescription,
+  getIncidentName,
+  getIncidentsName,
+  getStatusName,
+  paginationComponentOptions,
+  tableCustomStyles
+} from "@/common/utils";
+import { setLoading, useAppDispatch, useAppSelector } from "@/context";
 
 import type { PageProps } from "@/common/props";
-import type { SimulationEditType, SimulationType, StatusType } from "@/common/types";
+import type { TableColumn } from "react-data-table-component";
+import type {
+  CountryType,
+  IncidentType,
+  SimulationDataType,
+  SimulationEditType,
+  SimulationType,
+  StatusType
+} from "@/common/types";
 
 import { BootstrapTooltip, Filter, Layout, ModalSimulation } from "@/components";
 
@@ -33,19 +49,33 @@ import PlayCircleRoundedIcon from "@mui/icons-material/PlayCircleRounded";
 import PauseCircleRoundedIcon from "@mui/icons-material/PauseCircleRounded";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
+import StorageRoundedIcon from "@mui/icons-material/StorageRounded";
+import BallotRoundedIcon from "@mui/icons-material/BallotRounded";
+import MailRoundedIcon from "@mui/icons-material/MailRounded";
+import ContactMailRoundedIcon from "@mui/icons-material/ContactMailRounded";
 
 export default function Index({ auth }: PageProps) {
   if (!auth.user) return null;
 
   const { t, i18n } = useTranslation();
+  const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user.data);
   const admin = user.role.name_en === "super-administrator" || user.role.name_en === "administrator";
+
+  const [openSimulation, setOpenSimulation] = React.useState(false);
 
   const [filterText, setFilterText] = React.useState("");
   const [dialogText, setDialogText] = React.useState("");
 
-  const [statuses, setStatuses] = React.useState<StatusType[]>([]);
+  const [data, setData] = React.useState<SimulationDataType>({
+    statuses: [],
+    events: [],
+    incidents: [],
+    countries: []
+  });
+  const [incidents, setIncidents] = React.useState<IncidentType[]>([]);
   const [simulations, setSimulations] = React.useState<SimulationType[]>([]);
+
   const [simulation, setSimulation] = React.useState<SimulationType>({
     id: "",
     country: {
@@ -88,8 +118,6 @@ export default function Index({ auth }: PageProps) {
     updated_at: null
   });
 
-  const [openSimulation, setOpenSimulation] = React.useState(false);
-
   const [form, setForm] = React.useState<SimulationEditType>({
     id: "",
     country_id: "",
@@ -106,12 +134,20 @@ export default function Index({ auth }: PageProps) {
     pause: false
   });
 
+  const [groupPauseText, setGroupPauseText] = React.useState("");
+  const [groupPause, setPauseGrupo] = React.useState(false);
+
+  const handleShow = (row: SimulationType) => {
+    setSimulation(row);
+    setOpenSimulation(true);
+  };
+
   const handleDuplicate = (id: string) => {
     console.log(id);
   };
 
   const handleProgram = (row: SimulationType) => {
-    console.log(row);
+    setSimulation(row);
   };
 
   const handlePause = (id: string, group: boolean) => {
@@ -127,7 +163,45 @@ export default function Index({ auth }: PageProps) {
     console.log(id);
   };
 
-  const columns = React.useMemo(
+  const handleShowAGS = (row: SimulationType) => {
+    setSimulation(row);
+    // navigate("/simulacion/area_grupo_subgrupo");
+  };
+
+  const handleShowTM = (row: SimulationType) => {
+    setSimulation(row);
+    // navigate("/simulacion/tarea_mensaje");
+  };
+
+  const handleShowLMG = (row: SimulationType) => {
+    setSimulation(row);
+
+    /* setForm((prevState) => ({
+      ...prevState,
+      id: row.id
+    }));
+
+    setDialog((prevState) => ({
+      ...prevState,
+      listaMensaje: true
+    })); */
+  };
+
+  const handleShowLME = (row: SimulationType) => {
+    setSimulation(row);
+
+    /* setForm((prevState) => ({
+      ...prevState,
+      id: row.id
+    }));
+
+    setDialog((prevState) => ({
+      ...prevState,
+      listaMensajeExcon: true
+    })); */
+  };
+
+  const columns: TableColumn<SimulationType>[] = React.useMemo(
     () => [
       {
         name: t("table.actions"),
@@ -136,7 +210,7 @@ export default function Index({ auth }: PageProps) {
         cell: (row: SimulationType) => (
           <div className="flex gap-2">
             <BootstrapTooltip title={t("simulation.show")}>
-              <IconButton color="primary" onClick={() => setOpenSimulation(true)}>
+              <IconButton color="primary" onClick={() => handleShow(row)}>
                 <VisibilityRoundedIcon />
               </IconButton>
             </BootstrapTooltip>
@@ -195,7 +269,144 @@ export default function Index({ auth }: PageProps) {
           </div>
         )
       },
-      { name: t("table.control") }
+      {
+        name: t("table.control"),
+        button: true,
+        minWidth: "200px",
+        cell: (row: SimulationType) => (
+          <div className="flex gap-2">
+            {user.role.name_en === "excon-group" && (
+              <BootstrapTooltip title={t("simulation.show")}>
+                <IconButton color="primary" onClick={() => handleShow(row)}>
+                  <VisibilityRoundedIcon />
+                </IconButton>
+              </BootstrapTooltip>
+            )}
+
+            {user.role.name_en === "excon-group" &&
+            !row.pause &&
+            moment(new Date(moment.tz(new Date(), row.country.timezone).format("YYYY-MM-DD HH:mm:ss"))) >
+              moment(new Date(row.date_start_real)) &&
+            moment(new Date(moment.tz(new Date(), row.country.timezone).format("YYYY-MM-DD HH:mm:ss"))) <
+              moment(new Date(row.date_end_real)) ? (
+              groupPause ? (
+                <BootstrapTooltip title={t("simulation.program")}>
+                  <IconButton color="inherit" onClick={() => handleProgram(row)}>
+                    <PlayCircleRoundedIcon />
+                  </IconButton>
+                </BootstrapTooltip>
+              ) : (
+                <BootstrapTooltip title={t("simulation.pause")}>
+                  <IconButton color="inherit" onClick={() => handlePause(row.id, true)}>
+                    <PauseCircleRoundedIcon />
+                  </IconButton>
+                </BootstrapTooltip>
+              )
+            ) : null}
+
+            <BootstrapTooltip title={t("simulation.areas-groups-subgroups")}>
+              <IconButton color="inherit" onClick={() => handleShowAGS(row)}>
+                <StorageRoundedIcon />
+              </IconButton>
+            </BootstrapTooltip>
+
+            <BootstrapTooltip title={t("simulation.tasks-message")}>
+              <IconButton color="inherit" onClick={() => handleShowTM(row)}>
+                <BallotRoundedIcon />
+              </IconButton>
+            </BootstrapTooltip>
+
+            <BootstrapTooltip title={t("simulation.message-general")}>
+              <IconButton color="inherit" onClick={() => handleShowLMG(row)}>
+                <MailRoundedIcon />
+              </IconButton>
+            </BootstrapTooltip>
+
+            {(admin || user.role.name_en === "excon-general") && (
+              <BootstrapTooltip title={t("simulation.message-excon")}>
+                <IconButton color="inherit" onClick={() => handleShowLME(row)}>
+                  <ContactMailRoundedIcon />
+                </IconButton>
+              </BootstrapTooltip>
+            )}
+          </div>
+        )
+      },
+      {
+        name: t("simulation.icon"),
+        minWidth: "70px",
+        maxWidth: "70px",
+        cell: (row) =>
+          row.icon ? (
+            <Avatar variant="rounded" alt={row.name} sx={{ width: 30, height: 30 }} src={`storage/${row.icon}`} />
+          ) : (
+            <Avatar variant="rounded" sx={{ width: 30, height: 30 }}>
+              {row.name[0]}
+            </Avatar>
+          )
+      },
+      {
+        name: t("simulation.date-created"),
+        sortable: true,
+        minWidth: "160px",
+        selector: (row) => row.created_at || ""
+      },
+      {
+        name: t("simulation.name"),
+        wrap: true,
+        sortable: true,
+        minWidth: "225px",
+        selector: (row) => row.name
+      },
+      {
+        name: t("simulation.incident"),
+        wrap: true,
+        sortable: true,
+        minWidth: "150px",
+        selector: (row) => getIncidentName(i18n.language, row.incident)
+      },
+      {
+        name: t("simulation.incidents"),
+        wrap: true,
+        sortable: true,
+        minWidth: "210px",
+        cell: (row) => getIncidentsName(i18n.language, row.incidents)
+      },
+      {
+        name: t("simulation.country"),
+        wrap: true,
+        sortable: true,
+        minWidth: "251px",
+        cell: (row) => `${row.country.name}, ${row.country.timezone}, ${row.country.gmt}`
+      },
+      {
+        name: t("simulation.date_start_real"),
+        wrap: true,
+        sortable: true,
+        minWidth: "160px",
+        selector: (row) => row.date_start_real
+      },
+      {
+        name: t("simulation.date_end_real"),
+        wrap: true,
+        sortable: true,
+        minWidth: "160px",
+        selector: (row) => row.date_end_real
+      },
+      {
+        name: t("simulation.date_start_sim"),
+        wrap: true,
+        sortable: true,
+        minWidth: "190px",
+        selector: (row) => row.date_start_sim
+      },
+      {
+        name: t("simulation.date_end_sim"),
+        wrap: true,
+        sortable: true,
+        minWidth: "190px",
+        selector: (row) => row.date_end_sim
+      }
     ],
     [t, admin, form.status_id]
   );
@@ -241,13 +452,15 @@ export default function Index({ auth }: PageProps) {
   };
 
   React.useEffect(() => {
-    const getStatuses = async () => {
+    const getData = async () => {
+      dispatch(setLoading(true));
+
       try {
         await axios
-          .get("/statuses")
+          .get("/simulationData")
           .then((res) => {
             if (res.status === 200) {
-              setStatuses(res.data);
+              setData(res.data);
             } else {
               Swal.fire({ title: "Oops", text: t("common.error") || "", icon: "error" });
             }
@@ -258,9 +471,11 @@ export default function Index({ auth }: PageProps) {
       } catch (error) {
         Swal.fire({ title: "Oops", text: t("common.error") || "", icon: "error" });
       }
+
+      dispatch(setLoading(false));
     };
 
-    getStatuses();
+    getData();
   }, []);
 
   return (
@@ -296,7 +511,7 @@ export default function Index({ auth }: PageProps) {
                 </FormLabel>
 
                 <RadioGroup row defaultValue="a1bomei7SDgMw6JK" name="simulation_statuses">
-                  {statuses.map((item) => (
+                  {data.statuses.map((item) => (
                     <FormControlLabel
                       key={item.id}
                       value={item.id}

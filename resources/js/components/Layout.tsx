@@ -50,7 +50,7 @@ export default function Layout({ children }: GeneralProps) {
     <div className="p-0 flex relative h-screen">
       <Sidebar countries={countries} />
 
-      <main className="w-full">
+      <main className="grow overflow-y-hidden">
         <NavBar countries={countries} />
 
         <div className="p-5">{children}</div>

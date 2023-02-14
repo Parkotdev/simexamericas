@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\AreaCollection;
 use App\Models\Area;
 use Illuminate\Http\Request;
 
@@ -10,21 +11,11 @@ class AreaController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \App\Http\Resources\AreaCollection
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return new AreaCollection(Area::all());
     }
 
     /**
@@ -45,17 +36,6 @@ class AreaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Area $area)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Area  $area
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Area $area)
     {
         //
     }

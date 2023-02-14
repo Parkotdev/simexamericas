@@ -40,6 +40,7 @@
     "blackboard": "Pizarra",
     "document": "Documentos",
     "external-link": "Enlaces externos",
+    "links": "Enlaces",
     "reports": "Reportes",
     "users": "Usuarios",
     "configuration": "Configuración",
@@ -130,5 +131,9 @@
     "files": "Filas por páginas",
     "from": "de",
     "all": "Todos"
+  },
+  "board": {
+    "excon": "Tablero de simulación EXCON",
+    "participant": "Tablero de simulación Participante"
   }
 }

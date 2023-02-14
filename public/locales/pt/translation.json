@@ -6,10 +6,17 @@
     "password": "Password",
     "close": "Close",
     "error": "Sorry, an error has occurred.",
-    "select": "--Select--",
+    "select": "--Please, select--",
     "save": "Save",
     "cancel": "Cancel",
-    "edit": "Edit"
+    "edit": "Edit",
+    "new": "New",
+    "new-a": "New",
+    "search": "Search",
+    "not-data": "No data to show",
+    "editor-placeholder": "Start writing",
+    "description": "Description",
+    "home": "Home"
   },
   "valid": {
     "required": "Required",
@@ -33,6 +40,7 @@
     "blackboard": "Blackboard",
     "document": "Documents",
     "external-link": "External link",
+    "links": "Links",
     "reports": "Reports",
     "users": "Users",
     "configuration": "Configuration",
@@ -48,7 +56,52 @@
     "sign-out": "Sign out"
   },
   "simulation": {
-    "title": "Simulation"
+    "title": "Simulation",
+    "filter": "Filter",
+    "duplicate": "Duplicate",
+    "show": "Show",
+    "program": "Program",
+    "pause": "Pause",
+    "areas-groups-subgroups": "Areas, Group, Subgroup",
+    "tasks-message": "Tasks, messages",
+    "message-general": "General message",
+    "message-excon": "Message to excon",
+    "icon": "Icon",
+    "date-created": "Created date",
+    "name": "Name",
+    "incident": "Incident",
+    "incidents": "Associated incidents",
+    "country": "Country to be carried out",
+    "date_start_real": "Real start date",
+    "date_end_real": "Real end date",
+    "date_start_sim": "Simulated start date",
+    "date_end_sim": "Simulated end date",
+    "event": "Event",
+    "creation": "Creation",
+    "configuration": "Configuration",
+    "registration": "Registration",
+    "active": "Active",
+    "finished": "Finished",
+    "creation-text": "Simulation created",
+    "configuration-text": "Simulation under development",
+    "Registration-text": "User registration period",
+    "Active-text": "Simulation in execution",
+    "Finished-text": "Simulation finished",
+    "logo": "Logo for header",
+    "logo-upload": "Upload logo",
+    "logo-not-select": "You have not selected a logo",
+    "logo-delete": "Please remove the existing logo first",
+    "icon-upload": "Upload icon",
+    "icon-not-select": "You have not selected an icon",
+    "icon-delete": "Please remove the existing icon first",
+    "size": "Recommended size",
+    "format": "Format",
+    "max-size": "Max size",
+    "new-success": "Simulation successfully added",
+    "area-group-subgroup": "Areas, Groups, Subgroups",
+    "new-area": "New functional area",
+    "new-group": "New group",
+    "new-subgroup": "New subgroup"
   },
   "user": {
     "name": "Name",
@@ -71,5 +124,16 @@
     "password-new": "New password",
     "change": "Change",
     "status": "Status"
+  },
+  "table": {
+    "actions": "Actions",
+    "control": "Control",
+    "files": "Row per page",
+    "from": "from",
+    "all": "All"
+  },
+  "board": {
+    "excon": "EXCON simulation board",
+    "participant": "Participant simulation board"
   }
 }

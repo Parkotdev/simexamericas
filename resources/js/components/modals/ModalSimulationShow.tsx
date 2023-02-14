@@ -21,7 +21,7 @@ export default function ModalSimulationShow({ open, onClose, simulation }: Modal
   const printRef = React.useRef<HTMLInputElement>(null);
 
   const exportWORD = () => {
-    let html = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>${printRef.current.innerHTML}</body></html>`;
+    let html = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>${printRef.current?.innerHTML}</body></html>`;
 
     html = html.replace('img width="600"', 'img width="600" height="80"');
 
@@ -44,8 +44,8 @@ export default function ModalSimulationShow({ open, onClose, simulation }: Modal
 
           //Check the Browser type and download the File.
           const isIE = false || !!document.documentMode;
-          if (isIE) {
-            window.navigator.msSaveBlob(blob, "nota_conceptual.pdf");
+          if (isIE && navigator.msSaveBlob) {
+            navigator.msSaveBlob(blob, "nota_conceptual.pdf");
           } else {
             const url = window.URL || window.webkitURL;
             const link = url.createObjectURL(blob);

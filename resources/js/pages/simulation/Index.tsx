@@ -159,12 +159,12 @@ export default function Index({ auth }: PageProps) {
 
   const handleShowAGS = (row: SimulationType) => {
     dispatch(setSimulation(row));
-    router.get("/simulation/areaGroupSubgroup");
+    router.get("/simulation/AreaGroupSubgroup");
   };
 
   const handleShowTM = (row: SimulationType) => {
     dispatch(setSimulation(row));
-    router.get("/simulation/taskMessage");
+    router.get("/simulation/TaskMessage");
   };
 
   const handleShowLMG = (row: SimulationType) => {

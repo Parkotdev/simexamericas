@@ -2,6 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useProSidebar } from "react-pro-sidebar";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
+import { router } from "@inertiajs/react";
 import { Avatar, Badge, Button } from "@mui/material";
 import { getRoleName } from "@/common/utils";
 import { useAppSelector } from "@/context";
@@ -23,7 +24,7 @@ import BugReportRoundedIcon from "@mui/icons-material/BugReportRounded";
 import LocalFireDepartmentRoundedIcon from "@mui/icons-material/LocalFireDepartmentRounded";
 import PublicRoundedIcon from "@mui/icons-material/PublicRounded";
 import ContentPasteSearchIcon from "@mui/icons-material/ContentPasteSearch";
-// import AddLinkRoundedIcon from "@mui/icons-material/AddLinkRounded";
+import AddLinkRoundedIcon from "@mui/icons-material/AddLinkRounded";
 import LinkRoundedIcon from "@mui/icons-material/LinkRounded";
 
 import ModalProfile from "@/components/modals/ModalProfile";
@@ -34,7 +35,8 @@ export default function SidebarC({ countries }: LayoutProps) {
   const user = useAppSelector((state) => state.user.data);
   const [userInfo, setUserInfo] = React.useState(user);
 
-  const [open, setOpen] = React.useState(false);
+  const [openProfile, setOpenProfile] = React.useState(false);
+  const [openLink, setOpenLink] = React.useState(false);
   const [pathName, setPathName] = React.useState("");
   const [cant, setCant] = React.useState({
     blackboard: 0,
@@ -48,7 +50,7 @@ export default function SidebarC({ countries }: LayoutProps) {
       <div className="px-4 my-3 w-full">
         <Button
           className="bg-[#0000001a!important] w-full shadow-md rounded-md flex gap-3 items-center text-start"
-          onClick={() => setOpen(true)}
+          onClick={() => setOpenProfile(true)}
         >
           {user.photo ? (
             <Avatar alt={`${user.name[0]}${user.last_name[0]}`} className="bg-blue-500" src={`../storage/${user.photo}`} />
@@ -101,9 +103,29 @@ export default function SidebarC({ countries }: LayoutProps) {
     );
   };
 
+  const handleNavigation = (path: string) => {
+    switch (path) {
+      case "simulation":
+        if (pathName !== "/" && pathName !== "/simulation") router.get("/");
+        break;
+      case "excon":
+        if (pathName !== "/board/Excon") router.get("/board/Excon");
+        break;
+      case "participant":
+        if (pathName !== "/board/Participant") router.get("/board/Participant");
+        break;
+      default:
+        router.get("/audit");
+    }
+  };
+
   React.useEffect(() => {
-    setPathName(window.location.pathname);
-  }, []);
+    const pathName = window.location.pathname;
+    setPathName(pathName);
+    if (pathName === "/links") {
+      setOpenLink(true);
+    }
+  }, [window.location.pathname]);
 
   React.useEffect(() => {
     setUserInfo(user);
@@ -111,7 +133,7 @@ export default function SidebarC({ countries }: LayoutProps) {
 
   return (
     <>
-      <ModalProfile open={open} onClose={() => setOpen(false)} countries={countries} />
+      <ModalProfile open={openProfile} onClose={() => setOpenProfile(false)} countries={countries} />
 
       <Sidebar breakPoint="lg" width="300px">
         <div className={`flex flex-col items-center overflow-x-hidden overflow-y-auto mb-5 ${broken ? "mt-20" : "mt-5"}`}>
@@ -124,13 +146,36 @@ export default function SidebarC({ countries }: LayoutProps) {
           )}
 
           <Menu className="px-2">
-            <MenuItem icon={<AirplayRoundedIcon />} active={pathName === "/"}>
-              {!collapsed && t("sidebar.simulations")}
-            </MenuItem>
+            {userInfo.role.name_en !== "participant" && userInfo.role.name_en !== "observer-participant" && (
+              <MenuItem
+                icon={<AirplayRoundedIcon />}
+                active={
+                  pathName === "/" ||
+                  pathName === "/simulation" ||
+                  pathName === "/simulation/AreaGroupSubgroup" ||
+                  pathName === "/simulation/TaskMessage"
+                }
+                onClick={() => handleNavigation("simulation")}
+              >
+                {!collapsed && t("sidebar.simulations")}
+              </MenuItem>
+            )}
 
-            <MenuItem icon={<AutoAwesomeMotionRoundedIcon />}>{!collapsed && t("sidebar.board-excon")}</MenuItem>
+            {userInfo.role.name_en !== "participant" && userInfo.role.name_en !== "observer-participant" && (
+              <MenuItem
+                icon={<AutoAwesomeMotionRoundedIcon />}
+                active={pathName === "/board/Excon"}
+                onClick={() => handleNavigation("excon")}
+              >
+                {!collapsed && t("sidebar.board-excon")}
+              </MenuItem>
+            )}
 
-            <MenuItem icon={<AutoAwesomeMotionRoundedIcon />}>{!collapsed && t("sidebar.board-participant")}</MenuItem>
+            {(userInfo.role.name_en === "participant" || userInfo.role.name_en === "observer-participant") && (
+              <MenuItem icon={<AutoAwesomeMotionRoundedIcon />} onClick={() => handleNavigation("participant")}>
+                {!collapsed && t("sidebar.board-participant")}
+              </MenuItem>
+            )}
 
             <MenuItem
               icon={
@@ -142,15 +187,19 @@ export default function SidebarC({ countries }: LayoutProps) {
               {!collapsed && t("sidebar.blackboard")}
             </MenuItem>
 
-            <MenuItem
-              icon={
-                <Badge badgeContent={cant.mail} color="success">
-                  <EmailRoundedIcon />
-                </Badge>
-              }
-            >
-              {!collapsed && "MyMail"}
-            </MenuItem>
+            {userInfo.role.name_en !== "observer-general" &&
+              userInfo.role.name_en !== "observer-group" &&
+              userInfo.role.name_en !== "observer-participant" && (
+                <MenuItem
+                  icon={
+                    <Badge badgeContent={cant.mail} color="success">
+                      <EmailRoundedIcon />
+                    </Badge>
+                  }
+                >
+                  {!collapsed && "MyMail"}
+                </MenuItem>
+              )}
 
             <MenuItem
               icon={
@@ -162,31 +211,58 @@ export default function SidebarC({ countries }: LayoutProps) {
               {!collapsed && "Chat"}
             </MenuItem>
 
-            <MenuItem
-              icon={
-                <Badge badgeContent={cant.document} color="success">
-                  <MenuBookRoundedIcon />
-                </Badge>
-              }
+            {userInfo.role.name_en !== "observer-general" &&
+              userInfo.role.name_en !== "observer-group" &&
+              userInfo.role.name_en !== "observer-participant" && (
+                <MenuItem
+                  icon={
+                    <Badge badgeContent={cant.document} color="success">
+                      <MenuBookRoundedIcon />
+                    </Badge>
+                  }
+                >
+                  {!collapsed && t("sidebar.document")}
+                </MenuItem>
+              )}
+
+            <SubMenu
+              label={!collapsed && t("sidebar.external-link")}
+              icon={<LinkRoundedIcon />}
+              open={openLink}
+              onClick={() => setOpenLink(!openLink)}
             >
-              {!collapsed && t("sidebar.document")}
-            </MenuItem>
-
-            <SubMenu label={!collapsed && t("sidebar.external-link")} icon={<LinkRoundedIcon />}></SubMenu>
-
-            <MenuItem icon={<InsertChartIcon />}>{!collapsed && t("sidebar.reports")}</MenuItem>
-
-            <MenuItem icon={<GroupsRoundedIcon />}>{!collapsed && t("sidebar.users")}</MenuItem>
-
-            <SubMenu label={!collapsed && t("sidebar.configuration")} icon={<MiscellaneousServicesRoundedIcon />}>
-              <MenuItem icon={<BugReportRoundedIcon />}>{t("sidebar.events")}</MenuItem>
-
-              <MenuItem icon={<LocalFireDepartmentRoundedIcon />}>{t("sidebar.incidents")}</MenuItem>
-
-              <MenuItem icon={<PublicRoundedIcon />}>{t("sidebar.countries")}</MenuItem>
+              {(userInfo.role.name_en === "super-administrator" ||
+                userInfo.role.name_en === "administrator" ||
+                userInfo.role.name_en === "excon-general") && (
+                <MenuItem icon={<AddLinkRoundedIcon />} active={pathName === "/link"}>
+                  {t("sidebar.links")}
+                </MenuItem>
+              )}
             </SubMenu>
 
-            <MenuItem icon={<ContentPasteSearchIcon />}>{!collapsed && t("sidebar.audit")}</MenuItem>
+            {(userInfo.role.name_en !== "participant" && userInfo.role.name_en !== "observer-participant") && (
+              <MenuItem icon={<GroupsRoundedIcon />}>{!collapsed && t("sidebar.users")}</MenuItem>
+            )}
+
+            {(userInfo.role.name_en === "super-administrator" || userInfo.role.name_en === "administrator") && (
+              <SubMenu label={!collapsed && t("sidebar.configuration")} icon={<MiscellaneousServicesRoundedIcon />}>
+                <MenuItem icon={<BugReportRoundedIcon />}>{t("sidebar.events")}</MenuItem>
+
+                <MenuItem icon={<LocalFireDepartmentRoundedIcon />}>{t("sidebar.incidents")}</MenuItem>
+
+                <MenuItem icon={<PublicRoundedIcon />}>{t("sidebar.countries")}</MenuItem>
+              </SubMenu>
+            )}
+
+            {(userInfo.role.name_en === "super-administrator" ||
+              userInfo.role.name_en === "administrator" ||
+              userInfo.role.name_en === "excon-general") && (
+              <MenuItem icon={<InsertChartIcon />}>{!collapsed && t("sidebar.reports")}</MenuItem>
+            )}
+
+            {userInfo.role.name_en === "super-administrator" && (
+              <MenuItem icon={<ContentPasteSearchIcon />}>{!collapsed && t("sidebar.audit")}</MenuItem>
+            )}
           </Menu>
 
           {!collapsed && (

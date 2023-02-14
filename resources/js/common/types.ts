@@ -100,7 +100,8 @@ export type SimulationType = {
 
 export type AreaType = {
   id: string;
-  simulation_id: string;
+  simulation: SimulationType;
+  groups: GroupType[];
   name: string;
   description: string;
   color: string;
@@ -111,7 +112,9 @@ export type AreaType = {
 
 export type GroupType = {
   id: string;
-  area_id: string;
+  area: AreaType;
+  subgroups: SubgroupType[];
+  users: UserType[];
   name: string;
   description: string;
   color: string;
@@ -122,7 +125,8 @@ export type GroupType = {
 
 export type SubgroupType = {
   id: string;
-  group_id: string;
+  group: GroupType;
+  users: UserType[];
   name: string;
   description: string;
   color: string;
@@ -199,7 +203,7 @@ export type AreaGroupSubgroupFormType = {
   text: React.ReactNode;
   name: string;
   namePlaceholder: string;
-  nameError: boolean,
+  nameError: boolean;
   description: string;
   color: string;
 };

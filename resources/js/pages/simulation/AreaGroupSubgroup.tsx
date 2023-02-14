@@ -5,11 +5,14 @@ import { Alert, Breadcrumbs, Button, Link } from "@mui/material";
 import { useAppSelector } from "@/context";
 
 import type { AreaGroupSubgroupFormI } from "@/common/interfaces";
+import type { AreaType } from "@/common/types";
 
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 
 import { BootstrapTooltip, ModalAreaGroupSubgroup } from "@/components";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 export default function AreaGroupSubgroup() {
   const { t } = useTranslation();
@@ -19,7 +22,7 @@ export default function AreaGroupSubgroup() {
     user.role.name_en === "super-administrator" || user.role.name_en === "administrator" || user.role.name_en === "excon-general";
 
   const [open, setOpen] = React.useState(false);
-
+  const [data, setData] = React.useState<AreaType[]>([]);
   const [form, setForm] = React.useState<AreaGroupSubgroupFormI>({
     id: "",
     idParent: "",
@@ -31,7 +34,7 @@ export default function AreaGroupSubgroup() {
     namePlaceholder: "",
     nameError: false,
     description: "",
-    color: ""
+    color: "#000000"
   });
 
   const handleAdd = (event: React.MouseEvent, name_element: string, type_element: number, id_parent: string) => {
@@ -88,8 +91,48 @@ export default function AreaGroupSubgroup() {
     setOpen(true);
   };
 
+  const getData = async () => {
+    try {
+      await axios
+        .get("/areas")
+        .then((res) => {
+          if (res.status === 200) {
+            setData(res.data.areas);
+          } else {
+            Swal.fire({
+              timer: 2000,
+              icon: "error",
+              title: "Oops",
+              position: "top-end",
+              showConfirmButton: false,
+              text: t("common.error") || ""
+            });
+          }
+        })
+        .catch(() => {
+          Swal.fire({
+            timer: 2000,
+            icon: "error",
+            title: "Oops",
+            position: "top-end",
+            showConfirmButton: false,
+            text: t("common.error") || ""
+          });
+        });
+    } catch (error) {
+      Swal.fire({
+        timer: 2000,
+        icon: "error",
+        title: "Oops",
+        position: "top-end",
+        showConfirmButton: false,
+        text: t("common.error") || ""
+      });
+    }
+  };
+
   React.useEffect(() => {
-    if (!simulation.id) router.get("/");
+    simulation.id ? getData() : router.get("/");
   }, []);
 
   return (

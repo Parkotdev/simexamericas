@@ -1,4 +1,12 @@
-import { AreaGroupSubgroupFormType, AuthType, CountryType, SimulationDataType, SimulationEditType, SimulationType, ZiggyType } from "./types";
+import {
+  AreaGroupSubgroupFormType,
+  AuthType,
+  CountryType,
+  SimulationDataType,
+  SimulationEditType,
+  SimulationType,
+  ZiggyType
+} from "./types";
 
 export interface PageProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -50,6 +58,12 @@ export interface ModalSimulationShow extends ModalGeneralProps {
 }
 
 export interface ModalAreaGroupSubgroup extends ModalGeneralProps {
+  form: AreaGroupSubgroupFormType;
+  setForm: React.Dispatch<AreaGroupSubgroupFormType>;
+}
+
+export interface FormAreaGroupSubgroupProps {
+  onClose: () => void;
   form: AreaGroupSubgroupFormType;
   setForm: React.Dispatch<AreaGroupSubgroupFormType>;
 }

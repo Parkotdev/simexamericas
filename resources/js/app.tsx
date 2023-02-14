@@ -6,7 +6,7 @@ import "./i18n";
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { createInertiaApp } from "@inertiajs/react";
-import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
+// import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { Provider } from "react-redux";
 import { ProSidebarProvider } from "react-pro-sidebar";
 import { CssBaseline } from "@mui/material";

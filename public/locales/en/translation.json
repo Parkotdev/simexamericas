@@ -40,6 +40,7 @@
     "blackboard": "Blackboard",
     "document": "Documents",
     "external-link": "External link",
+    "links": "Links",
     "reports": "Reports",
     "users": "Users",
     "configuration": "Configuration",
@@ -130,5 +131,9 @@
     "files": "Row per page",
     "from": "from",
     "all": "All"
+  },
+  "board": {
+    "excon": "EXCON simulation board",
+    "participant": "Participant simulation board"
   }
 }

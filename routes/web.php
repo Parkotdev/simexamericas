@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AreaController;
 use App\Http\Controllers\ConnectorController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\SimulationController;
@@ -40,6 +41,23 @@ Route::middleware('auth:sanctum')->group(function () {
         return csrf_token();
     });
 
+    // PAGES
+    Route::get('/simulation', function () {
+        return Inertia::render('simulation/Index');
+    });
+    Route::get('/simulation/AreaGroupSubgroup', function () {
+        return Inertia::render('simulation/AreaGroupSubgroup');
+    });
+    Route::get('/simulation/TaskMessage', function () {
+        return Inertia::render('simulation/TaskMessage');
+    });
+    Route::get('/board/Excon', function () {
+        return Inertia::render('board/Excon');
+    });
+    Route::get('/board/Participant', function () {
+        return Inertia::render('board/Participant');
+    });
+
     // CONNECTOR
     Route::post('/connector', [ConnectorController::class, 'connector']);
 
@@ -61,13 +79,15 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     // SIMULATION
-    Route::controller(SimulationController::class)->group(function () {        
-        Route::get('/simulation', 'simulation');
-        Route::get('/simulation/areaGroupSubgroup', 'areaGroupSubgroup');
-        Route::get('/simulation/taskMessage', 'taskMessage');
+    Route::controller(SimulationController::class)->group(function () {
         Route::get('/simulationData', 'simulationData');
         Route::get('/simulationByStatus/{status_id}', 'simulationByStatus');
         Route::post('/simulation', 'store');
+    });
+
+    // AREA
+    Route::controller(AreaController::class)->group(function () {
+        Route::get('/areas', 'index');
     });
 });
 

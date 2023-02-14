@@ -19,21 +19,6 @@ use Inertia\Inertia;
 
 class SimulationController extends Controller
 {
-    public function simulation()
-    {
-        return Inertia::render('simulation/Index');
-    }
-
-    public function areaGroupSubgroup()
-    {
-        return Inertia::render('simulation/AreaGroupSubgroup');
-    }
-
-    public function taskMessage()
-    {
-        return Inertia::render('simulation/TaskMessage');
-    }
-
     /**
      * Display a listing of the resource.
      *

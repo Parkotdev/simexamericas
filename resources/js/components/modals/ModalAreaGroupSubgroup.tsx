@@ -7,7 +7,7 @@ import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 
 import { FormAreaGroupSubgroup } from "@/containers";
 
-export default function ModalAreaGroupSubgroup({ open, onClose, form, setForm }: ModalAreaGroupSubgroup) {
+export default function ModalAreaGroupSubgroup({ open, onClose, form, setForm, data }: ModalAreaGroupSubgroup) {
   return (
     <Dialog open={open} onClose={onClose}>
       <AppBar sx={{ position: "relative" }}>
@@ -19,7 +19,7 @@ export default function ModalAreaGroupSubgroup({ open, onClose, form, setForm }:
         </Toolbar>
       </AppBar>
 
-      <FormAreaGroupSubgroup onClose={onClose} form={form} setForm={setForm} />
+      <FormAreaGroupSubgroup onClose={onClose} form={form} setForm={setForm} data={data} />
     </Dialog>
   );
 }

@@ -12,7 +12,7 @@ import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 
 import { BootstrapTooltip } from "@/components";
 
-export default function FormAreaGroupSubgroup({ onClose, form, setForm }: FormAreaGroupSubgroupProps) {
+export default function FormAreaGroupSubgroup({ onClose, form, setForm, data }: FormAreaGroupSubgroupProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const socket = useAppSelector((state) => state.general.socket);
@@ -143,13 +143,13 @@ export default function FormAreaGroupSubgroup({ onClose, form, setForm }: FormAr
             if (res.status === 201) {
               switch (form.type) {
                 case 1:
-                  await socket.emit("area_add", res.data.areas);
+                  await socket.emit("area_add", { type: "add", area: res.data.areas, data });
                   break;
                 case 2:
-                  await socket.emit("group_add", res.data.groups);
+                  await socket.emit("group_add", { type: "add", group: res.data.groups, data });
                   break;
                 default:
-                  await socket.emit("subgroup_add", res.data.subgroups);
+                  await socket.emit("subgroup_add", { type: "add", subgroup: res.data.subgroups, data });
               }
               onClose();
               Swal.fire({

@@ -19,7 +19,7 @@ class AreaResource extends JsonResource
         return [
             'id' => $this->id(),
             'simulation' => $this->simulation,
-            'groups' => $this->groups,
+            'groups' => new GroupCollection($this->groups),
             'name' => $this->name(),
             'description' => $this->description(),
             'color' => $this->color(),

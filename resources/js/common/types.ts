@@ -61,6 +61,99 @@ export type StatusType = {
   updated_at: null | string;
 };
 
+export type UserEditType = {
+  id: string;
+  role_id?: string;
+  country_id: string;
+  simulation_id?: string;
+  area_id?: string;
+  group_id?: string;
+  subgroup_id?: string;
+  name: string;
+  last_name: string;
+  email?: string;
+  status?: boolean;
+  phone: string;
+  organization: string;
+};
+
+export type UserType = {
+  id: string;
+  role: RoleType;
+  country: CountryType;
+  simulation: null | SimulationType;
+  area: null | AreaType;
+  group: null | GroupType;
+  subgroup: null | SubgroupType;
+  name: string;
+  last_name: string;
+  email: string;
+  password: string;
+  status: boolean;
+  photo: null | string;
+  phone: null | string;
+  organization: null | string;
+};
+
+export type SubgroupType = {
+  id: string;
+  group: GroupEditType;
+  users: UserType[];
+  name: string;
+  description: string;
+  color: string;
+  icon: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export type GroupEditType = {
+  id: string;
+  area_id: string;
+  name: string;
+  description: null | string;
+  color: string;
+  icon: null | string;
+  created_at: null | string;
+  updated_at: null | string;
+};
+
+export type GroupType = {
+  id: string;
+  area: AreaEditType;
+  subgroups: SubgroupType[];
+  users: UserType[];
+  name: string;
+  description: string;
+  color: string;
+  icon: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export type AreaEditType = {
+  id: string;
+  simulation_id: string;
+  name: string;
+  description: null | string;
+  color: string;
+  icon: null | string;
+  created_at: null | string;
+  updated_at: null | string;
+};
+
+export type AreaType = {
+  id: string;
+  simulation: SimulationEditType;
+  groups: GroupType[];
+  name: string;
+  description: string;
+  color: string;
+  icon: string;
+  created_at: string;
+  updated_at: string;
+};
+
 export type SimulationEditType = {
   id: string;
   country_id: string;
@@ -87,86 +180,15 @@ export type SimulationType = {
   status: StatusType;
   name: string;
   description: string;
-  logo: null | string;
-  icon: null | string;
+  logo: string;
+  icon: string;
   date_start_real: string;
   date_end_real: string;
   date_start_sim: string;
   date_end_sim: string;
   pause: boolean;
-  created_at: null | string;
-  updated_at: null | string;
-};
-
-export type AreaType = {
-  id: string;
-  simulation: SimulationType;
-  groups: GroupType[];
-  name: string;
-  description: string;
-  color: string;
-  icon: string;
-  created_at: null | string;
-  updated_at: null | string;
-};
-
-export type GroupType = {
-  id: string;
-  area: AreaType;
-  subgroups: SubgroupType[];
-  users: UserType[];
-  name: string;
-  description: string;
-  color: string;
-  icon: string;
-  created_at: null | string;
-  updated_at: null | string;
-};
-
-export type SubgroupType = {
-  id: string;
-  group: GroupType;
-  users: UserType[];
-  name: string;
-  description: string;
-  color: string;
-  icon: string;
-  created_at: null | string;
-  updated_at: null | string;
-};
-
-export type UserType = {
-  id: string;
-  role: RoleType;
-  country: CountryType;
-  simulation: null | SimulationType;
-  area: null | AreaType;
-  group: null | GroupType;
-  subgroup: null | SubgroupType;
-  name: string;
-  last_name: string;
-  email: string;
-  password: string;
-  status: boolean;
-  photo: null | string;
-  phone: null | string;
-  organization: null | string;
-};
-
-export type UserEditType = {
-  id: string;
-  role_id?: string;
-  country_id: string;
-  simulation_id?: string;
-  area_id?: string;
-  group_id?: string;
-  subgroup_id?: string;
-  name: string;
-  last_name: string;
-  email?: string;
-  status?: boolean;
-  phone: string;
-  organization: string;
+  created_at: string;
+  updated_at: string;
 };
 
 export type AuthType = {

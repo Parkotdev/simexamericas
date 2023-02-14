@@ -114,8 +114,8 @@
     "edit-group-success": "Grupo editado exitosamente",
     "edit-subgroup-success": "Subgrupo editado exitosamente",
     "area-empty": "Esta área funcional debe estar totalmente vacía para ser borrada.",
-    "group-empty": "Este grupo debe estar totalmente vacía para ser borrada.",
-    "subgroup-empty": "Este subgrupo funcional debe estar totalmente vacía para ser borrada.",
+    "group-empty": "Este grupo debe estar totalmente vacío para ser borrado.",
+    "subgroup-empty": "Este subgrupo funcional debe estar totalmente vacío para ser borrado.",
     "area-delete": "¿Está seguro que desea eliminar el área seleccionada?",
     "group-delete": "¿Está seguro que desea eliminar el grupo seleccionada?",
     "subgroup-delete": "¿Está seguro que desea eliminar el subgrupo seleccionada?"

@@ -1,5 +1,6 @@
 import {
   AreaGroupSubgroupFormType,
+  AreaType,
   AuthType,
   CountryType,
   SimulationDataType,
@@ -60,12 +61,14 @@ export interface ModalSimulationShow extends ModalGeneralProps {
 export interface ModalAreaGroupSubgroup extends ModalGeneralProps {
   form: AreaGroupSubgroupFormType;
   setForm: React.Dispatch<AreaGroupSubgroupFormType>;
+  data: AreaType[];
 }
 
 export interface FormAreaGroupSubgroupProps {
   onClose: () => void;
   form: AreaGroupSubgroupFormType;
   setForm: React.Dispatch<AreaGroupSubgroupFormType>;
+  data: AreaType[];
 }
 
 /***** END MODALS *****/

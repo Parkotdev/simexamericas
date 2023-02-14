@@ -19,7 +19,7 @@ class SubgroupResource extends JsonResource
         return [
             'id' => $this->id(),
             'group' => $this->group,
-            'users' => $this->users,
+            'users' => new UserCollection($this->users),
             'name' => $this->name(),
             'description' => $this->description(),
             'color' => $this->color(),

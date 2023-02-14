@@ -28,11 +28,17 @@ class Area extends Model
         return $this->belongsTo(Simulation::class);
     }
 
+    /**
+     * Get the groups associated with the area.
+     */
     public function groups()
     {
         return $this->hasMany(Group::class);
     }
 
+    /**
+     * Get the users associated with the area.
+     */
     public function users()
     {
         return $this->hasMany(User::class);

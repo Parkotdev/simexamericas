@@ -1,10 +1,11 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Button, DialogActions, DialogContent, IconButton, Link, TextField, Typography } from "@mui/material";
+import axios from "axios";
 import Swal from "sweetalert2";
+import { setLoading, useAppDispatch, useAppSelector } from "@/context";
 
 import type { FormAreaGroupSubgroupProps } from "@/common/props";
-import type { LogoI } from "@/common/interfaces";
 
 import FileUploadRounded from "@mui/icons-material/FileUploadRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
@@ -13,14 +14,8 @@ import { BootstrapTooltip } from "@/components";
 
 export default function FormAreaGroupSubgroup({ onClose, form, setForm }: FormAreaGroupSubgroupProps) {
   const { t } = useTranslation();
-
-  const [icon, setIcon] = React.useState<LogoI>({
-    element: null,
-    color: "black",
-    text: t("simulation.icon-not-select"),
-    link: undefined,
-    delete: false
-  });
+  const dispatch = useAppDispatch();
+  const socket = useAppSelector((state) => state.general.socket);
 
   const handleChangeIcon = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
@@ -29,12 +24,15 @@ export default function FormAreaGroupSubgroup({ onClose, form, setForm }: FormAr
       if (file.type === "image/jpg" || file.type === "image/jpeg" || file.type === "image/png") {
         if (file.size <= 5000000) {
           const URL = window.URL || window.webkitURL;
-          setIcon({
-            element: file,
-            color: "primary",
-            text: file.name,
-            link: URL.createObjectURL(file),
-            delete: true
+          setForm({
+            ...form,
+            icon: {
+              element: file,
+              color: "primary",
+              text: file.name,
+              link: URL.createObjectURL(file),
+              delete: true
+            }
           });
         } else {
           event.preventDefault();
@@ -60,7 +58,7 @@ export default function FormAreaGroupSubgroup({ onClose, form, setForm }: FormAr
   };
 
   const handleChangeIconEdit = (event: React.MouseEvent<HTMLInputElement>) => {
-    if (form.id && !icon.element && icon.color !== "black") {
+    if (form.id && !form.icon.element && form.icon.color !== "black") {
       event.preventDefault();
       Swal.fire({
         position: "top-end",
@@ -73,25 +71,128 @@ export default function FormAreaGroupSubgroup({ onClose, form, setForm }: FormAr
   };
 
   const handleClearIcon = () => {
-    setIcon({
-      element: null,
-      color: "black",
-      text: t("simulation.icon-not-select"),
-      link: undefined,
-      delete: false
+    setForm({
+      ...form,
+      icon: {
+        element: null,
+        color: "black",
+        text: t("simulation.icon-not-select"),
+        link: undefined,
+        delete: false
+      }
     });
   };
 
   const handleDeleteIcon = () => {
-    if (form.id && !icon.element) {
-      console.log(icon);
+    if (form.id && !form.icon.element) {
+      Swal.fire({
+        icon: "warning",
+        title: t("common.delete-icon") || "",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        confirmButtonText: t("common.accept") || ""
+      });
     } else {
       handleClearIcon();
     }
   };
 
-  const handleSubmit = () => {
-    console.log("submit");
+  const handleSubmit = async () => {
+    if (form.name.trim() === "") {
+      setForm({ ...form, name_error: true });
+    } else {
+      dispatch(setLoading(true));
+
+      try {
+        const formData = new FormData();
+
+        formData.append(
+          "data",
+          JSON.stringify({
+            id: form.id,
+            id_parent: form.id_parent,
+            name: form.name,
+            description: form.description,
+            color: form.color,
+            icon: form.icon.element ? true : false
+          })
+        );
+
+        if (form.icon.element) formData.append("file", form.icon.element);
+
+        let url = "/subgroups",
+          title_success = t("simulation.new-subgroup-success");
+
+        switch (form.type) {
+          case 1:
+            url = "/areas";
+            title_success = t("simulation.new-area-success");
+            break;
+          case 2:
+            url = "/groups";
+            title_success = t("simulation.new-group-success");
+            break;
+          default:
+            url = "/subgroups";
+            title_success = t("simulation.new-subgroup-success");
+        }
+
+        await axios
+          .post(url, formData)
+          .then(async (res) => {
+            if (res.status === 201) {
+              switch (form.type) {
+                case 1:
+                  await socket.emit("area_add", res.data.areas);
+                  break;
+                case 2:
+                  await socket.emit("group_add", res.data.groups);
+                  break;
+                default:
+                  await socket.emit("subgroup_add", res.data.subgroups);
+              }
+              onClose();
+              Swal.fire({
+                timer: 2000,
+                icon: "success",
+                title: title_success,
+                position: "top-end",
+                showConfirmButton: false
+              });
+            } else {
+              Swal.fire({
+                timer: 2000,
+                icon: "error",
+                title: "Oops",
+                position: "top-end",
+                showConfirmButton: false,
+                text: t("common.error") || ""
+              });
+            }
+          })
+          .catch(() => {
+            Swal.fire({
+              timer: 2000,
+              icon: "error",
+              title: "Oops",
+              position: "top-end",
+              showConfirmButton: false,
+              text: t("common.error") || ""
+            });
+          });
+      } catch (error) {
+        Swal.fire({
+          timer: 2000,
+          icon: "error",
+          title: "Oops",
+          position: "top-end",
+          showConfirmButton: false,
+          text: t("common.error") || ""
+        });
+      }
+
+      dispatch(setLoading(false));
+    }
   };
 
   return (
@@ -105,16 +206,16 @@ export default function FormAreaGroupSubgroup({ onClose, form, setForm }: FormAr
           size="small"
           value={form.name}
           variant="outlined"
-          error={form.nameError}
+          error={form.name_error}
           sx={{ mt: 1, mb: 3 }}
-          helperText={form.nameError ? t("valid.required") : ""}
+          helperText={form.name_error ? t("valid.required") : ""}
           label={
             <>
-              {`${form.namePlaceholder}:`} {<span style={{ color: "red" }}>*</span>}
+              {`${form.name_placeholder}:`} {<span style={{ color: "red" }}>*</span>}
             </>
           }
           onChange={(e) => {
-            setForm({ ...form, name: e.target.value, nameError: e.target.value.trim() === "" });
+            setForm({ ...form, name: e.target.value, name_error: e.target.value.trim() === "" });
           }}
           onKeyDown={(event) => {
             if (event.key === "Enter") {
@@ -161,11 +262,11 @@ export default function FormAreaGroupSubgroup({ onClose, form, setForm }: FormAr
           </label>
 
           <div>
-            <Link target="_blank" underline="none" color={icon.color} href={icon.link} download={icon.text}>
-              {icon.text}
+            <Link target="_blank" underline="none" color={form.icon.color} href={form.icon.link} download={form.icon.text}>
+              {form.icon.text}
             </Link>
 
-            {icon.delete && (
+            {form.icon.delete && (
               <BootstrapTooltip title={t("common.delete")}>
                 <IconButton color="error" onClick={handleDeleteIcon}>
                   <DeleteRoundedIcon />

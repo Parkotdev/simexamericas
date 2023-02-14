@@ -2,40 +2,63 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\SubgroupCollection;
+use App\Http\Resources\SubgroupResource;
+use App\Models\File;
 use App\Models\Subgroup;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class SubgroupController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \App\Http\Resources\SubgroupCollection
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return new SubgroupCollection(Subgroup::all());
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
-        //
+        $data = json_decode($request->data);
+
+        $param = [
+            'id' => Str::random(16),
+            'group_id' => $data->id_parent,
+            'name' => $data->name,
+            'color' => $data->color
+        ];
+
+        if ($data->description) {
+            $param['description'] = $data->description;
+        }
+
+        $group = Subgroup::create($param);
+
+        if ($data->icon) {
+            $file = $request->file('file');
+            $name = $file->getClientOriginalName();
+            $path = $file->store('subgroup', 'public');
+            File::create([
+                'id' => Str::random(16),
+                'type_id' => $group->id,
+                'type' => 'subgroup',
+                'name' => $name,
+                'path' => $path,
+            ]);
+            $group->update(['icon' => $path]);
+        }
+
+        return (new SubgroupResource(Subgroup::find($group->id)))->response()->setStatusCode(201);
     }
 
     /**
@@ -45,17 +68,6 @@ class SubgroupController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Subgroup $subgroup)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Subgroup  $subgroup
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Subgroup $subgroup)
     {
         //
     }
@@ -75,11 +87,12 @@ class SubgroupController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Subgroup  $subgroup
-     * @return \Illuminate\Http\Response
+     * @param  string  $id
+     * @return bool
      */
-    public function destroy(Subgroup $subgroup)
+    public function destroy($id)
     {
-        //
+        Subgroup::where('id', $id)->delete();
+        return true;
     }
 }

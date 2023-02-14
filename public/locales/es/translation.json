@@ -16,7 +16,9 @@
     "not-data": "No existen datos para mostrar",
     "editor-placeholder": "Comenzar a escribir",
     "description": "Descripción",
-    "home": "Inicio"
+    "home": "Inicio",
+    "delete-icon": "¿Está seguro que desea eliminar el ícono seleccionado?",
+    "duplicate": "Duplicar"
   },
   "valid": {
     "required": "Obligatorio",
@@ -101,7 +103,22 @@
     "area-group-subgroup": "Áreas, Grupos, Subgrupos",
     "new-area": "Nueva area funcional",
     "new-group": "Nuevo grupo",
-    "new-subgroup": "Nuevo subgrupo"
+    "new-subgroup": "Nuevo subgrupo",
+    "new-area-success": "Area añadida exitosamente",
+    "new-group-success": "Grupo añadido exitosamente",
+    "new-subgroup-success": "Subgrupo añadido exitosamente",
+    "edit-area": "Editar area funcional",
+    "edit-group": "Editar grupo",
+    "edit-subgroup": "Editar subgrupo",
+    "edit-area-success": "Area editada exitosamente",
+    "edit-group-success": "Grupo editado exitosamente",
+    "edit-subgroup-success": "Subgrupo editado exitosamente",
+    "area-empty": "Esta área funcional debe estar totalmente vacía para ser borrada.",
+    "group-empty": "Este grupo debe estar totalmente vacía para ser borrada.",
+    "subgroup-empty": "Este subgrupo funcional debe estar totalmente vacía para ser borrada.",
+    "area-delete": "¿Está seguro que desea eliminar el área seleccionada?",
+    "group-delete": "¿Está seguro que desea eliminar el grupo seleccionada?",
+    "subgroup-delete": "¿Está seguro que desea eliminar el subgrupo seleccionada?"
   },
   "user": {
     "name": "Nombre",

@@ -38,6 +38,36 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
   console.log(`User connect: ${socket.id}`);
 
+  /******************** AREA ********************/
+  socket.on("area_add", (area) => {
+    io.emit("get_areas", { type: "add", area });
+  });
+
+  socket.on("area_delete", (area) => {
+    io.emit("get_areas", { type: "delete", area });
+  });
+  /****************** END AREA ******************/
+
+  /******************** GROUPS ********************/
+  socket.on("group_add", (group) => {
+    io.emit("get_groups", { type: "add", group });
+  });
+
+  socket.on("area_delete", (group) => {
+    io.emit("get_groups", { type: "delete", group });
+  });
+  /****************** END GROUPS ******************/
+
+  /******************** SUBGROUPS ********************/
+  socket.on("subgroup_add", (subgroup) => {
+    io.emit("get_subgroups", { type: "add", subgroup });
+  });
+
+  socket.on("area_delete", (subgroup) => {
+    io.emit("get_subgroups", { type: "delete", subgroup });
+  });
+  /****************** END SUBGROUPS ******************/
+
   socket.on("disconnect", () => {
     console.log(`User disconnect: ${socket.id}`);
   });

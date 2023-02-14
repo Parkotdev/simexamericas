@@ -15,7 +15,6 @@ use App\Models\Simulation;
 use App\Models\Status;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Inertia\Inertia;
 
 class SimulationController extends Controller
 {
@@ -94,7 +93,7 @@ class SimulationController extends Controller
             $simulation->update(['icon' => $path]);
         }
 
-        return (new SimulationResource($simulation))->response()->setStatusCode(201);
+        return (new SimulationResource(Simulation::find($simulation->id)))->response()->setStatusCode(201);
     }
 
     /**

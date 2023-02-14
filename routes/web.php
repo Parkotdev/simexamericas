@@ -3,8 +3,10 @@
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\ConnectorController;
 use App\Http\Controllers\CountryController;
+use App\Http\Controllers\GroupController;
 use App\Http\Controllers\SimulationController;
 use App\Http\Controllers\StatusController;
+use App\Http\Controllers\SubgroupController;
 use App\Http\Controllers\UserController;
 use App\Http\Resources\UserCollection;
 use App\Models\Country;
@@ -88,6 +90,20 @@ Route::middleware('auth:sanctum')->group(function () {
     // AREA
     Route::controller(AreaController::class)->group(function () {
         Route::get('/areas', 'index');
+        Route::post('/areas', 'store');
+        Route::delete('/areas/{id}', 'destroy');
+    });
+
+    // GROUP
+    Route::controller(GroupController::class)->group(function () {
+        Route::post('/groups', 'store');
+        Route::delete('/groups/{id}', 'destroy');
+    });
+
+    // SUBGROUP
+    Route::controller(SubgroupController::class)->group(function () {
+        Route::post('/subgroups', 'store');
+        Route::delete('/subgroups/{id}', 'destroy');
     });
 });
 

@@ -196,14 +196,21 @@ export type SimulationDataType = {
 
 export type AreaGroupSubgroupFormType = {
   id: string;
-  idParent: string;
+  id_parent: string;
   edit: boolean;
   type: number;
   title: string;
   text: React.ReactNode;
   name: string;
-  namePlaceholder: string;
-  nameError: boolean;
+  name_placeholder: string;
+  name_error: boolean;
   description: string;
   color: string;
+  icon: {
+    element: null | File;
+    color: string;
+    text: null | string;
+    link: undefined | string;
+    delete: boolean;
+  };
 };

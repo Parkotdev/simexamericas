@@ -24,7 +24,7 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Index');
+    return Inertia::render('simulation/Index');
 });
 
 Route::get('/getDataSignUp', function () {
@@ -61,8 +61,12 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     // SIMULATION
-    Route::controller(SimulationController::class)->group(function () {
+    Route::controller(SimulationController::class)->group(function () {        
+        Route::get('/simulation', 'simulation');
+        Route::get('/simulation/areaGroupSubgroup', 'areaGroupSubgroup');
+        Route::get('/simulation/taskMessage', 'taskMessage');
         Route::get('/simulationData', 'simulationData');
+        Route::get('/simulationByStatus/{status_id}', 'simulationByStatus');
         Route::post('/simulation', 'store');
     });
 });

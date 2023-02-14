@@ -25,3 +25,17 @@ export interface LogoI {
   link: undefined | string;
   delete: boolean;
 }
+
+export interface AreaGroupSubgroupFormI {
+  id: string;
+  idParent: string;
+  edit: boolean;
+  type: number;
+  title: string;
+  text: React.ReactNode;
+  name: string;
+  namePlaceholder: string;
+  nameError: boolean
+  description: string;
+  color: string;
+}

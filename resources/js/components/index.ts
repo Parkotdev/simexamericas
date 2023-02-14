@@ -12,3 +12,4 @@ export { default as ModalProfile } from "./modals/ModalProfile";
 export { default as ModalChangePassword } from "./modals/ModalChangePassword";
 export { default as ModalSimulation } from "./modals/ModalSimulation";
 export { default as ModalSimulationShow } from "./modals/ModalSimulationShow";
+export { default as ModalAreaGroupSubgroup } from "./modals/ModalAreaGroupSubgroup";

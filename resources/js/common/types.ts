@@ -179,9 +179,27 @@ export type UserSliceType = {
   data: UserType;
 };
 
+export type SimulationSliceType = {
+  data: SimulationType;
+};
+
 export type SimulationDataType = {
   statuses: StatusType[];
   events: EventType[];
   incidents: IncidentType[];
   countries: CountryType[];
+};
+
+export type AreaGroupSubgroupFormType = {
+  id: string;
+  idParent: string;
+  edit: boolean;
+  type: number;
+  title: string;
+  text: React.ReactNode;
+  name: string;
+  namePlaceholder: string;
+  nameError: boolean,
+  description: string;
+  color: string;
 };

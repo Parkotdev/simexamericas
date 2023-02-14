@@ -15,7 +15,8 @@
     "search": "Search",
     "not-data": "No data to show",
     "editor-placeholder": "Start writing",
-    "description": "Description"
+    "description": "Description",
+    "home": "Home"
   },
   "valid": {
     "required": "Required",
@@ -95,7 +96,11 @@
     "size": "Recommended size",
     "format": "Format",
     "max-size": "Max size",
-    "new-success": "Simulation successfully added"
+    "new-success": "Simulation successfully added",
+    "area-group-subgroup": "Areas, Groups, Subgroups",
+    "new-area": "New functional area",
+    "new-group": "New group",
+    "new-subgroup": "New subgroup"
   },
   "user": {
     "name": "Name",

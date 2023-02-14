@@ -1,6 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import DataTable from "react-data-table-component";
+import { router } from "@inertiajs/react";
 import {
   Avatar,
   Breadcrumbs,
@@ -25,13 +26,13 @@ import {
   paginationComponentOptions,
   tableCustomStyles
 } from "@/common/utils";
-import { setLoading, useAppDispatch, useAppSelector } from "@/context";
+import { setLoading, setSimulation, useAppDispatch, useAppSelector } from "@/context";
 
 import type { PageProps } from "@/common/props";
 import type { TableColumn } from "react-data-table-component";
 import type { IncidentType, SimulationDataType, SimulationEditType, SimulationType } from "@/common/types";
 
-import { BootstrapTooltip, Filter, Layout, ModalSimulation, ModalSimulationShow } from "@/components";
+import { BootstrapTooltip, Filter, ModalSimulation, ModalSimulationShow } from "@/components";
 
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import FilterAltRoundedIcon from "@mui/icons-material/FilterAltRounded";
@@ -53,6 +54,7 @@ export default function Index({ auth }: PageProps) {
   const { t, i18n } = useTranslation();
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user.data);
+  const simulation = useAppSelector((state) => state.simulation.data);
   const admin = user.role.name_en === "super-administrator" || user.role.name_en === "administrator";
 
   const [openSimulation, setOpenSimulation] = React.useState(false);
@@ -69,61 +71,6 @@ export default function Index({ auth }: PageProps) {
   });
   const [incidents, setIncidents] = React.useState<IncidentType[]>([]);
   const [simulations, setSimulations] = React.useState<SimulationType[]>([]);
-
-  const [simulation, setSimulation] = React.useState<SimulationType>({
-    id: "",
-    country: {
-      id: "",
-      iso_code: "",
-      iso_code_3: "",
-      phone_code: "",
-      name: "",
-      timezone: "",
-      gmt: "",
-      created_at: null,
-      updated_at: null
-    },
-    incident: {
-      id: "",
-      event: {
-        id: "",
-        incidents: [],
-        event_es: "",
-        event_en: "",
-        event_fr: "",
-        event_pt: "",
-        created_at: null,
-        updated_at: null
-      },
-      incident_es: "",
-      incident_en: "",
-      incident_fr: "",
-      incident_pt: "",
-      created_at: null,
-      updated_at: null
-    },
-    incidents: [],
-    status: {
-      id: "",
-      status_es: "",
-      status_en: "",
-      status_fr: "",
-      status_pt: "",
-      created_at: null,
-      updated_at: null
-    },
-    name: "",
-    description: "",
-    logo: null,
-    icon: null,
-    date_start_real: "",
-    date_end_real: "",
-    date_start_sim: "",
-    date_end_sim: "",
-    pause: false,
-    created_at: null,
-    updated_at: null
-  });
 
   const [form, setForm] = React.useState<SimulationEditType>({
     id: "",
@@ -144,8 +91,48 @@ export default function Index({ auth }: PageProps) {
   const [groupPauseText, setGroupPauseText] = React.useState("");
   const [groupPause, setPauseGrupo] = React.useState(false);
 
+  const getSimulations = async () => {
+    try {
+      await axios
+        .get(`/simulationByStatus/${form.status_id}`)
+        .then((res) => {
+          if (res.status === 200) {
+            setSimulations(res.data.simulations);
+          } else {
+            Swal.fire({
+              timer: 2000,
+              icon: "error",
+              title: "Oops",
+              position: "top-end",
+              showConfirmButton: false,
+              text: t("common.error") || ""
+            });
+          }
+        })
+        .catch(() => {
+          Swal.fire({
+            timer: 2000,
+            icon: "error",
+            title: "Oops",
+            position: "top-end",
+            showConfirmButton: false,
+            text: t("common.error") || ""
+          });
+        });
+    } catch (error) {
+      Swal.fire({
+        timer: 2000,
+        icon: "error",
+        title: "Oops",
+        position: "top-end",
+        showConfirmButton: false,
+        text: t("common.error") || ""
+      });
+    }
+  };
+
   const handleShow = (row: SimulationType) => {
-    setSimulation(row);
+    dispatch(setSimulation(row));
     setOpenSimulationShow(true);
   };
 
@@ -154,7 +141,7 @@ export default function Index({ auth }: PageProps) {
   };
 
   const handleProgram = (row: SimulationType) => {
-    setSimulation(row);
+    dispatch(setSimulation(row));
   };
 
   const handlePause = (id: string, group: boolean) => {
@@ -171,41 +158,21 @@ export default function Index({ auth }: PageProps) {
   };
 
   const handleShowAGS = (row: SimulationType) => {
-    setSimulation(row);
-    // navigate("/simulacion/area_grupo_subgrupo");
+    dispatch(setSimulation(row));
+    router.get("/simulation/areaGroupSubgroup");
   };
 
   const handleShowTM = (row: SimulationType) => {
-    setSimulation(row);
-    // navigate("/simulacion/tarea_mensaje");
+    dispatch(setSimulation(row));
+    router.get("/simulation/taskMessage");
   };
 
   const handleShowLMG = (row: SimulationType) => {
-    setSimulation(row);
-
-    /* setForm((prevState) => ({
-      ...prevState,
-      id: row.id
-    }));
-
-    setDialog((prevState) => ({
-      ...prevState,
-      listaMensaje: true
-    })); */
+    dispatch(setSimulation(row));
   };
 
   const handleShowLME = (row: SimulationType) => {
-    setSimulation(row);
-
-    /* setForm((prevState) => ({
-      ...prevState,
-      id: row.id
-    }));
-
-    setDialog((prevState) => ({
-      ...prevState,
-      listaMensajeExcon: true
-    })); */
+    dispatch(setSimulation(row));
   };
 
   const columns: TableColumn<SimulationType>[] = React.useMemo(
@@ -215,7 +182,7 @@ export default function Index({ auth }: PageProps) {
         button: true,
         minWidth: "200px",
         cell: (row: SimulationType) => (
-          <div className="flex gap-2">
+          <div className="flex gap-1">
             <BootstrapTooltip title={t("simulation.show")}>
               <IconButton color="primary" onClick={() => handleShow(row)}>
                 <VisibilityRoundedIcon />
@@ -281,7 +248,7 @@ export default function Index({ auth }: PageProps) {
         button: true,
         minWidth: "200px",
         cell: (row: SimulationType) => (
-          <div className="flex gap-2">
+          <div className="flex gap-1">
             {user.role.name_en === "excon-group" && (
               <BootstrapTooltip title={t("simulation.show")}>
                 <IconButton color="primary" onClick={() => handleShow(row)}>
@@ -341,6 +308,7 @@ export default function Index({ auth }: PageProps) {
       },
       {
         name: t("simulation.icon"),
+        center: true,
         minWidth: "70px",
         maxWidth: "70px",
         cell: (row) =>
@@ -468,15 +436,37 @@ export default function Index({ auth }: PageProps) {
           .then((res) => {
             if (res.status === 200) {
               setData(res.data);
+              getSimulations();
             } else {
-              Swal.fire({ title: "Oops", text: t("common.error") || "", icon: "error" });
+              Swal.fire({
+                timer: 2000,
+                icon: "error",
+                title: "Oops",
+                position: "top-end",
+                showConfirmButton: false,
+                text: t("common.error") || ""
+              });
             }
           })
           .catch(() => {
-            Swal.fire({ title: "Oops", text: t("common.error") || "", icon: "error" });
+            Swal.fire({
+              timer: 2000,
+              icon: "error",
+              title: "Oops",
+              position: "top-end",
+              showConfirmButton: false,
+              text: t("common.error") || ""
+            });
           });
       } catch (error) {
-        Swal.fire({ title: "Oops", text: t("common.error") || "", icon: "error" });
+        Swal.fire({
+          timer: 2000,
+          icon: "error",
+          title: "Oops",
+          position: "top-end",
+          showConfirmButton: false,
+          text: t("common.error") || ""
+        });
       }
 
       dispatch(setLoading(false));
@@ -486,7 +476,7 @@ export default function Index({ auth }: PageProps) {
   }, []);
 
   return (
-    <>
+    <div>
       <ModalSimulation
         open={openSimulation}
         onClose={() => setOpenSimulation(false)}
@@ -497,65 +487,63 @@ export default function Index({ auth }: PageProps) {
       />
       <ModalSimulationShow open={openSimulationShow} onClose={() => setOpenSimulationShow(false)} simulation={simulation} />
 
-      <Layout>
-        <div className="flex justify-between mb-4">
-          <span className="text-2xl">{t("user.simulation")}</span>
+      <div className="flex justify-between mb-4">
+        <span className="text-2xl">{t("user.simulation")}</span>
 
-          <Breadcrumbs>
-            <HomeRoundedIcon fontSize="medium" className="mt-1" />
+        <Breadcrumbs>
+          <HomeRoundedIcon fontSize="medium" className="mt-1" />
 
-            <div>{t("user.simulation")}</div>
-          </Breadcrumbs>
-        </div>
+          <div>{t("user.simulation")}</div>
+        </Breadcrumbs>
+      </div>
 
-        <Card>
-          <CardContent
-            sx={{
-              "& header": {
-                padding: "4px 0"
-              }
-            }}
-          >
-            {admin && (
-              <FormControl className="mb-[1rem!important]">
-                <FormLabel className="flex items-center gap-1">
-                  <span className="font-bold">{t("user.status")}</span>
-                  <span className="flex items-center">
-                    ({t("simulation.filter")} <FilterAltRoundedIcon />)
-                  </span>
-                </FormLabel>
+      <Card>
+        <CardContent
+          sx={{
+            "& header": {
+              padding: "4px 0"
+            }
+          }}
+        >
+          {admin && (
+            <FormControl className="mb-[1rem!important]">
+              <FormLabel className="flex items-center gap-1">
+                <span className="font-bold">{t("user.status")}</span>
+                <span className="flex items-center">
+                  ({t("simulation.filter")} <FilterAltRoundedIcon />)
+                </span>
+              </FormLabel>
 
-                <RadioGroup row defaultValue="a1bomei7SDgMw6JK" name="simulation_statuses">
-                  {data.statuses.map((item) => (
-                    <FormControlLabel
-                      key={item.id}
-                      value={item.id}
-                      label={getStatusName(i18n.language, item)}
-                      control={<Radio size="small" />}
-                      onChange={() => handleChangeForm("status", item.id)}
-                    />
-                  ))}
-                </RadioGroup>
-              </FormControl>
-            )}
+              <RadioGroup row defaultValue="a1bomei7SDgMw6JK" name="simulation_statuses">
+                {data.statuses.map((item) => (
+                  <FormControlLabel
+                    key={item.id}
+                    value={item.id}
+                    label={getStatusName(i18n.language, item)}
+                    control={<Radio size="small" />}
+                    onChange={() => handleChangeForm("status", item.id)}
+                  />
+                ))}
+              </RadioGroup>
+            </FormControl>
+          )}
 
-            <DataTable
-              striped
-              columns={columns}
-              data={filteredItems}
-              pagination
-              paginationComponentOptions={paginationComponentOptions(t)}
-              subHeader
-              subHeaderComponent={subHeaderComponent}
-              persistTableHead
-              fixedHeader
-              customStyles={tableCustomStyles}
-              highlightOnHover
-              noDataComponent={<span className="my-2">{t("common.not-data")}</span>}
-            />
-          </CardContent>
-        </Card>
-      </Layout>
-    </>
+          <DataTable
+            striped
+            columns={columns}
+            data={filteredItems}
+            pagination
+            paginationComponentOptions={paginationComponentOptions(t)}
+            subHeader
+            subHeaderComponent={subHeaderComponent}
+            persistTableHead
+            fixedHeader
+            customStyles={tableCustomStyles}
+            highlightOnHover
+            noDataComponent={<span className="my-2">{t("common.not-data")}</span>}
+          />
+        </CardContent>
+      </Card>
+    </div>
   );
 }

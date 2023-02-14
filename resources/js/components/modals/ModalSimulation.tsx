@@ -239,7 +239,7 @@ export default function ModalSimulation({ open, onClose, title, data, form, setF
     setIcon({
       element: null,
       color: "black",
-      text: t("simulation.logo-not-select"),
+      text: t("simulation.icon-not-select"),
       link: undefined,
       delete: false
     });
@@ -348,6 +348,17 @@ export default function ModalSimulation({ open, onClose, title, data, form, setF
 
   const handleClose = () => {
     setEvent("");
+    setIncidents([]);
+    setCountry(null);
+    setIncidentsA([]);
+    setErrorName(false);
+    setErrorEvent(false);
+    setErrorIncident(false);
+    setErrorCountry(false);
+    setHelpName("");
+    setHelpEvent("");
+    setHelpIncident("");
+    setHelpCountry("");
     onClose();
   };
 

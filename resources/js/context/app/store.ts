@@ -2,11 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 // import logger from "redux-logger";
 import generalReducer from "../slices/generalSlice";
 import userReducer from "../slices/userSlice";
+import simulationReducer from "../slices/simulationSlice";
 
 export const store = configureStore({
   reducer: {
     general: generalReducer,
-    user: userReducer
+    user: userReducer,
+    simulation: simulationReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

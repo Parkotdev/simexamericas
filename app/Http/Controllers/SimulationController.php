@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\EventCollection;
 use App\Http\Resources\IncidentCollection;
+use App\Http\Resources\SimulationCollection;
 use App\Http\Resources\SimulationResource;
 use App\Models\Audit;
 use App\Models\Country;
@@ -14,9 +15,25 @@ use App\Models\Simulation;
 use App\Models\Status;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
 
 class SimulationController extends Controller
 {
+    public function simulation()
+    {
+        return Inertia::render('simulation/Index');
+    }
+
+    public function areaGroupSubgroup()
+    {
+        return Inertia::render('simulation/AreaGroupSubgroup');
+    }
+
+    public function taskMessage()
+    {
+        return Inertia::render('simulation/TaskMessage');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -137,5 +154,10 @@ class SimulationController extends Controller
             'incidents' => new IncidentCollection(Incident::all()),
             'countries' => Country::all()
         ];
+    }
+
+    public function simulationByStatus($status_id)
+    {
+        return new SimulationCollection(Simulation::where('status_id', $status_id)->get());
     }
 }

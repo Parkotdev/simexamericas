@@ -15,7 +15,8 @@
     "search": "Buscar",
     "not-data": "No existen datos para mostrar",
     "editor-placeholder": "Comenzar a escribir",
-    "description": "Descripción"
+    "description": "Descripción",
+    "home": "Inicio"
   },
   "valid": {
     "required": "Obligatorio",
@@ -95,7 +96,11 @@
     "size": "Dimensión recomendada",
     "format": "Formato",
     "max-size": "Tamaño máximo",
-    "new-success": "Simulación añadida exitosamente"
+    "new-success": "Simulación añadida exitosamente",
+    "area-group-subgroup": "Áreas, Grupos, Subgrupos",
+    "new-area": "Nueva area funcional",
+    "new-group": "Nuevo grupo",
+    "new-subgroup": "Nuevo subgrupo"
   },
   "user": {
     "name": "Nombre",
